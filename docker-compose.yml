@@ -1,0 +1,26 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:latest
+    environment: 
+        SA_PASSWORD: "9SO@T123"
+        ACCEPT_EULA: "Y"
+        MSSQL_PID: "Developer"
+    ports: ["1433:1433"]        
+  mssqltools:
+    image: mcr.microsoft.com/mssql-tools
+    depends_on:
+        - sqlserver
+    volumes:
+        - /scripts-banco/script.sql                  
+    command: /bin/bash -c "sleep 10 && /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P 9SO@T123 -d master -i /scripts-banco/script.sql"
+  fiap.api:
+    image: ${DOCKER_REGISTRY-}fiapapi
+    build:
+      context: .
+      dockerfile: fiap/Dockerfile
+    environment:
+    - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+    - "8081:80"
+    depends_on: 
+    - mssqltools 
