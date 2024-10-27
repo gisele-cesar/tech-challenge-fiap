@@ -29,11 +29,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repositories", "Repositorie
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{86600342-C2BC-4FBE-A694-D05C6F1FD9DF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{80A7E060-B56C-447D-99E2-496951248D89}"
-	ProjectSection(SolutionItems) = preProject
-		Dockerfile = Dockerfile
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{B37AB122-89D0-4696-BA2F-F0A97EA14B0C}"
 	ProjectSection(SolutionItems) = preProject
 		scripts\ScriptCriacaoTabelas.sql = scripts\ScriptCriacaoTabelas.sql
@@ -43,6 +38,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fiap.API", "src\Ports\fiap.API\fiap.API.csproj", "{E9A4548F-FC54-4E04-ADD0-03205481A60D}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{B4C616FB-55C9-4CC6-9665-9F11D3404FE9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{74204BAD-E523-4303-8723-22D0720532C9}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +54,10 @@ Global
 		{E9A4548F-FC54-4E04-ADD0-03205481A60D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9A4548F-FC54-4E04-ADD0-03205481A60D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9A4548F-FC54-4E04-ADD0-03205481A60D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4C616FB-55C9-4CC6-9665-9F11D3404FE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4C616FB-55C9-4CC6-9665-9F11D3404FE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4C616FB-55C9-4CC6-9665-9F11D3404FE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4C616FB-55C9-4CC6-9665-9F11D3404FE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,7 +73,6 @@ Global
 		{FB88B119-87C5-401C-B7EF-4C54F738DA8F} = {C6CCA414-3EF3-4603-8AC3-A071681E8EC6}
 		{9C9D30F1-3647-4778-B825-3C6F1332E152} = {C6CCA414-3EF3-4603-8AC3-A071681E8EC6}
 		{86600342-C2BC-4FBE-A694-D05C6F1FD9DF} = {C6CCA414-3EF3-4603-8AC3-A071681E8EC6}
-		{B37AB122-89D0-4696-BA2F-F0A97EA14B0C} = {80A7E060-B56C-447D-99E2-496951248D89}
 		{E9A4548F-FC54-4E04-ADD0-03205481A60D} = {EEC85BE4-9F84-4419-896A-D81B4B21B946}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
