@@ -29,20 +29,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repositories", "Repositorie
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{86600342-C2BC-4FBE-A694-D05C6F1FD9DF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{B37AB122-89D0-4696-BA2F-F0A97EA14B0C}"
-	ProjectSection(SolutionItems) = preProject
-		scripts\ScriptCriacaoTabelas.sql = scripts\ScriptCriacaoTabelas.sql
-		scripts\ScriptInsertTabelasDominio.sql = scripts\ScriptInsertTabelasDominio.sql
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fiap.API", "src\Ports\fiap.API\fiap.API.csproj", "{E9A4548F-FC54-4E04-ADD0-03205481A60D}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{B4C616FB-55C9-4CC6-9665-9F11D3404FE9}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{74204BAD-E523-4303-8723-22D0720532C9}"
-	ProjectSection(SolutionItems) = preProject
-		.gitignore = .gitignore
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
