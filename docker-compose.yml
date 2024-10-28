@@ -1,18 +1,19 @@
 services:
   sqlserver:
-    image: mcr.microsoft.com/mssql/server:latest
+    image: mcr.microsoft.com/mssql/server:2019-latest
     environment: 
-        SA_PASSWORD: "9SO@T123"
-        ACCEPT_EULA: "Y"
-        MSSQL_PID: "Developer"
-    ports: ["1433:1433"]        
+      SA_PASSWORD: "9SO@T123"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
   mssqltools:
     image: mcr.microsoft.com/mssql-tools
     depends_on:
-        - sqlserver
+      - sqlserver
     volumes:
-        - /scripts/ScriptCriacaoTabelas.sql
-    command: /bin/bash -c "sleep 10 && /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P 9SO@T123 -d master -i /scripts/ScriptCriacaoTabelas.sql"
+      - ./ScriptCriacaoTabelas.sql:/tmp/ScriptCriacaoTabelas.sql
+    command: /bin/bash -c "sleep 15 && /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P 9SO@T123 -d master -i /tmp/ScriptCriacaoTabelas.sql"
   fiap.api:
     image: ${DOCKER_REGISTRY-}fiapapi
     build:
@@ -22,5 +23,3 @@ services:
     - ASPNETCORE_ENVIRONMENT=Development
     ports:
     - "8081:80"
-    depends_on: 
-    - mssqltools 
