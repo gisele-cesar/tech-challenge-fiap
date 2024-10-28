@@ -11,13 +11,13 @@ services:
     depends_on:
         - sqlserver
     volumes:
-        - /scripts-banco/script.sql                  
-    command: /bin/bash -c "sleep 10 && /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P 9SO@T123 -d master -i /scripts-banco/script.sql"
+        - /scripts/ScriptCriacaoTabelas.sql
+    command: /bin/bash -c "sleep 10 && /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P 9SO@T123 -d master -i /scripts/ScriptCriacaoTabelas.sql"
   fiap.api:
     image: ${DOCKER_REGISTRY-}fiapapi
     build:
       context: .
-      dockerfile: fiap/Dockerfile
+      dockerfile: src/Ports/fiap.API/Dockerfile
     environment:
     - ASPNETCORE_ENVIRONMENT=Development
     ports:
