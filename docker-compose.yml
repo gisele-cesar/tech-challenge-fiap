@@ -18,8 +18,10 @@ services:
     image: ${DOCKER_REGISTRY-}fiapapi
     build:
       context: .
-      dockerfile: src/Ports/fiap.API/Dockerfile
+      dockerfile: Dockerfile
     environment:
     - ASPNETCORE_ENVIRONMENT=Development
     ports:
     - "8081:80"
+    depends_on: 
+    - mssqltools 
