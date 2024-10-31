@@ -7,7 +7,7 @@
     <ProjectGuid>b4c616fb-55c9-4cc6-9665-9f11d3404fe9</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
-    <DockerServiceName>fiap-api</DockerServiceName>
+    <DockerServiceName>fiapapi</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.yml" />

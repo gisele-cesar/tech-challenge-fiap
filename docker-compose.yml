@@ -13,15 +13,15 @@ services:
       - sqlserver
     volumes:
       - ./ScriptCriacaoTabelas.sql:/tmp/ScriptCriacaoTabelas.sql
-    command: /bin/bash -c "sleep 15 && /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P 9SO@T123 -d master -i /tmp/ScriptCriacaoTabelas.sql"
-  fiap.API:
-    image: ${DOCKER_REGISTRY-}fiap-api
+    command: /bin/bash -c "sleep 10 && /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P 9SO@T123 -d master -i /tmp/ScriptCriacaoTabelas.sql"
+  fiapapi:
+    image: ${DOCKER_REGISTRY-}fiapapi
     build:
       context: .
-      dockerfile: /Dockerfile
+      dockerfile: Dockerfile
     environment:
     - ASPNETCORE_ENVIRONMENT=Development
     ports:
-    - "5272:5272"
-    depends_on: 
-    - mssqltools 
+    - "8080:8080"
+    # depends_on: 
+    # - sqlserver 
