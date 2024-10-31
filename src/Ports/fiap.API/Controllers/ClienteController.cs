@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using fiap.Application.Interfaces;
+using fiap.Domain.Entities;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,9 +10,10 @@ namespace fiap.API.Controllers
     [ApiController]
     public class ClienteController : ControllerBase
     {
-        public ClienteController()
+        private readonly IClienteApplication _clienteApplication;
+        public ClienteController(IClienteApplication clienteApplication)
         {
-
+            _clienteApplication = clienteApplication;
         }
         // GET: api/<ClienteController>
         [HttpGet]
@@ -30,6 +33,7 @@ namespace fiap.API.Controllers
         [HttpPost]
         public void Post([FromBody] string value)
         {
+            _clienteApplication.Salvar(new Cliente { Id = 1, Nome = "Tirulina" });
         }
 
         // PUT api/<ClienteController>/5

@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace fiap.Domain.Entities
 {
-    internal class Class1
+    public class Cliente
     {
+        public int Id { get; set; }
+        public string Nome { get; set; }
     }
 }
