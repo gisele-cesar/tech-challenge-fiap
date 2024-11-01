@@ -1,4 +1,8 @@
 using fiap.Application;
+using fiap.Repositories;
+using System.Data.SqlClient;
+using System.Data;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +17,9 @@ builder.Services.AddHealthChecks();
 /// Adiciona injeção de dependência no Application
 builder.Services.AddApplicationModule();
 
+builder.Services.AddTransient<Func<IDbConnection>>(sp => () =>
+            new SqlConnection(builder.Configuration.GetConnectionString("fiap.sqlServer")));
+builder.Services.AddRepositoriesModule();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

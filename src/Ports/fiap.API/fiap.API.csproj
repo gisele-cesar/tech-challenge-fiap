@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Adapters\Infra\fiap.Repositories\fiap.Repositories.csproj" />
     <ProjectReference Include="..\..\Adapters\Infra\fiap.Services\fiap.Services.csproj" />
     <ProjectReference Include="..\..\Core\fiap.Application\fiap.Application.csproj" />
     <ProjectReference Include="..\..\Core\fiap.Domain\fiap.Domain.csproj" />

@@ -1,5 +1,6 @@
 ﻿using fiap.Application.Interfaces;
 using fiap.Domain.Entities;
+using fiap.Domain.Repositories.Interfaces;
 using System;
 using System.Threading.Tasks;
 
@@ -7,9 +8,20 @@ namespace fiap.Application.UseCases
 {
     public class ClienteApplication : IClienteApplication
     {
-        public Task<bool> Salvar(Cliente cliente)
+        private readonly IClienteRepository _clienteRepository;
+        public ClienteApplication(IClienteRepository clienteRepository)
         {
-            return Task.FromResult(true);
+            _clienteRepository = clienteRepository;
+        }
+        public async Task<bool> Salvar(Cliente cliente)
+        {
+
+            return await _clienteRepository.Salvar(cliente);
+        }
+        public async Task<Cliente> ObterPorId(int id)
+        {
+
+            return await _clienteRepository.ObterPorId(id);
         }
     }
 }

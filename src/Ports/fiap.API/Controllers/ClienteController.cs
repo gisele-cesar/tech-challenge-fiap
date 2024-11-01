@@ -31,9 +31,9 @@ namespace fiap.API.Controllers
 
         // POST api/<ClienteController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] Cliente cliente)
         {
-            _clienteApplication.Salvar(new Cliente { Id = 1, Nome = "Tirulina" });
+            return Ok(await _clienteApplication.Salvar(cliente));
         }
 
         // PUT api/<ClienteController>/5
