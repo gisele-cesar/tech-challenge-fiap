@@ -88,11 +88,7 @@ namespace fiap.Repositories
             connection.Open();
             var lst = new List<Cliente>();
             using var command = connection.CreateCommand();
-            command.CommandText = "SELECT * FROM Cliente WHERE IdCliente = @id";
-            var param = command.CreateParameter();
-            param.ParameterName = "@id";
-            param.Value = id;
-            command.Parameters.Add(param);
+            command.CommandText = "SELECT * FROM Cliente";
 
             using var reader = command.ExecuteReader();
             while (reader.Read())
