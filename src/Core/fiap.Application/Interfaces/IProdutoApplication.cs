@@ -10,5 +10,6 @@ namespace fiap.Application.Interfaces
         Task<List<Produto>> Obter();
         Task<bool> Inserir(Produto cliente);
         Task<bool> Atualizar(Produto cliente);
+        Task<List<Produto>> ObterProdutosPorCategoria(int idCategoriaProduto);
     }
 }

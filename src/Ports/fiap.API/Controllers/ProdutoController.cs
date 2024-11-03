@@ -40,5 +40,11 @@ namespace fiap.API.Controllers
 
             return BadRequest(new { Mensagem = "Erro ao alterar" });
         }
+        
+        [HttpGet("iCategoria/{idCategoria}")]
+        public async Task<IActionResult> GetProdutosPorCategoria(int idCategoriaProduto)
+        {
+            return Ok(await _produtoApplication.ObterProdutosPorCategoria(idCategoriaProduto));
+        }
     }
 }
