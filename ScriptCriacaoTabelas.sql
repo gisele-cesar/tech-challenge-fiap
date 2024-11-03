@@ -44,7 +44,7 @@ CREATE TABLE Produto (
         IdCategoriaProduto INT,
         Nome VARCHAR(255) NOT NULL,
         Descricao VARCHAR(255) NOT NULL,
-        Preco DECIMAL NOT NULL,
+        Preco DECIMAL(18,2) NOT NULL,
         DataCriacao DATETIME NOT NULL,
         DataAlteracao DATETIME NULL,
         CONSTRAINT FK_CategoriaProduto FOREIGN KEY (IdCategoriaProduto) REFERENCES CategoriaProduto(IdCategoriaProduto)
@@ -61,9 +61,9 @@ CREATE TABLE Produto (
         IdCliente INT NOT NULL,
         NumeroPedido VARCHAR(255) NOT NULL,
         IdStatusPedido INT NOT NULL,
-        ValorTotalPedido DECIMAL NOT NULL,
+        ValorTotalPedido DECIMAL(18,2) NOT NULL,
         DataCriacao DATETIME NOT NULL,
-        DataAlteracao DATETIME NOT NULL,
+        DataAlteracao DATETIME NULL,
         CONSTRAINT FK_Cliente FOREIGN KEY (IdCliente) REFERENCES Cliente(IdCliente),
         CONSTRAINT FK_StatusPedido FOREIGN KEY (IdStatusPedido) REFERENCES StatusPedido(IdStatusPedido)
     );

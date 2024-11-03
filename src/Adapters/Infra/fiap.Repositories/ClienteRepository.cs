@@ -34,7 +34,7 @@ namespace fiap.Repositories
                 return Task.FromResult(new Cliente
                 {
                     Id = (int)reader["IdCliente"],
-                    Nome = reader["NomeCliente"].ToString(),
+                    Nome = reader["Nome"].ToString(),
                     Cpf = reader["Cpf"].ToString(),
                     Email = reader["Email"].ToString()
                 });
@@ -68,7 +68,7 @@ namespace fiap.Repositories
             connection.Open();
             // Execute your query
             using var command = connection.CreateCommand();
-            sb.Append("update Cliente set NomeCliente = @nome,");
+            sb.Append("update Cliente set Nome = @nome,");
             sb.Append("Cpf = @cpf, Email = @email ");
             sb.Append(" where IdCliente = @id");
 
@@ -97,7 +97,7 @@ namespace fiap.Repositories
                 lst.Add(new Cliente
                 {
                     Id = (int)reader["IdCliente"],
-                    Nome = reader["NomeCliente"].ToString(),
+                    Nome = reader["Nome"].ToString(),
                     Cpf = reader["Cpf"].ToString(),
                     Email = reader["Email"].ToString()
                 });
@@ -124,7 +124,7 @@ namespace fiap.Repositories
                 return Task.FromResult(new Cliente
                 {
                     Id = (int)reader["IdCliente"],
-                    Nome = reader["NomeCliente"].ToString(),
+                    Nome = reader["Nome"].ToString(),
                     Cpf = reader["Cpf"].ToString(),
                     Email = reader["Email"].ToString()
                 });
