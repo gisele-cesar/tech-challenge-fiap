@@ -26,7 +26,12 @@ namespace fiap.API.Controllers
         {
             return Ok(await _clienteApplication.Obter(id));
         }
-
+        [HttpGet()]
+        [Route("api/[controller]/ObterPorCpf/{cpf?}")]
+        public async Task<IActionResult> ObterPorCpf(string cpf)
+        {
+            return Ok(await _clienteApplication.ObterPorCpf(cpf));
+        }
         // POST api/<ClienteController>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Cliente cliente)

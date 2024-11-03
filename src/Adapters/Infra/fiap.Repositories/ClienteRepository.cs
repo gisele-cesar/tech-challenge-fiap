@@ -104,6 +104,36 @@ namespace fiap.Repositories
             }
             return Task.FromResult(lst);
         }
+
+        public Task<Cliente> ObterPorCpf(string cpf)
+        {
+            using var connection = _connectionFactory();
+            connection.Open();
+            // Execute your query
+            using var command = connection.CreateCommand();
+            command.CommandText = "SELECT * FROM Cliente WHERE Cpf = @cpf";
+            var param = command.CreateParameter();
+            param.ParameterName = "@cpf";
+            param.Value = cpf;
+            command.Parameters.Add(param);
+
+            using var reader = command.ExecuteReader();
+            if (reader.Read())
+            {
+                // Map your data to your entity
+                return Task.FromResult(new Cliente
+                {
+                    Id = (int)reader["IdCliente"],
+                    Nome = reader["NomeCliente"].ToString(),
+                    Cpf = reader["Cpf"].ToString(),
+                    Email = reader["Email"].ToString()
+                });
+            }
+            else
+            {
+                return (Task<Cliente>)Task.CompletedTask;
+            }
+        }
     }
 
 }

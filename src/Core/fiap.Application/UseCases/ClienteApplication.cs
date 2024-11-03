@@ -28,6 +28,11 @@ namespace fiap.Application.UseCases
 
             return await _clienteRepository.Obter(id);
         }
+        public async Task<Cliente> ObterPorCpf(string cpf)
+        {
+
+            return await _clienteRepository.ObterPorCpf(cpf);
+        }
         public async Task<bool> Atualizar(Cliente cliente)
         {
             return await _clienteRepository.Atualizar(cliente);
