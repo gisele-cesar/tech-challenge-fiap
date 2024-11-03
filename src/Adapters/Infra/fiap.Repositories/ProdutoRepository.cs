@@ -114,6 +114,32 @@ namespace fiap.Repositories
             }
             return Task.FromResult(lst);
         }
+
+        public Task<List<Produto>> ObterProdutosPorCategoria(int idCategoriaProduto)
+        {
+            using var connection = _connectionFactory();
+            connection.Open();
+            var lst = new List<Produto>();
+            using var command = connection.CreateCommand();
+            command.CommandText = "SELECT * FROM Produto" +
+                                   "WHERE IdCategoriaProduto = @idCategoriaProduto";
+
+            using var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                lst.Add(new Produto
+                {
+                    IdProduto = (int)reader["IdProduto"],
+                    IdCategoriaProduto = (int)reader["IdCategoriaProduto"],
+                    Nome = reader["NomeProduto"].ToString(),
+                    Descricao = reader["Descricao"].ToString(),
+                    Preco = (decimal)reader["Preco"],
+                    DataCriacao = (DateTime)reader["DataCriacao"],
+                    DataAlteracao = (DateTime)reader["DataAlteracao"]
+                });
+            }
+            return Task.FromResult(lst);
+        }
     }
 
 }

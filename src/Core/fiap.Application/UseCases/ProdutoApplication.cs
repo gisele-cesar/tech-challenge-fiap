@@ -32,5 +32,10 @@ namespace fiap.Application.UseCases
         {
             return await _produtoRepository.Atualizar(produto);
         }
+
+        public async Task<List<Produto>> ObterProdutosPorCategoria(int idCategoriaProduto)
+        {
+            return await _produtoRepository.ObterProdutosPorCategoria(idCategoriaProduto);
+        }
     }
 }

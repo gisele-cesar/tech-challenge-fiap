@@ -10,5 +10,6 @@ namespace fiap.Domain.Repositories.Interfaces
         Task<List<Produto>> Obter();
         Task<bool> Inserir(Produto produto);
         Task<bool> Atualizar(Produto produto);
+        Task<List<Produto>> ObterProdutosPorCategoria(int idCategoriaProduto);
     }   
 }
