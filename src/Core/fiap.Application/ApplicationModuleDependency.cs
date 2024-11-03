@@ -9,6 +9,7 @@ namespace fiap.Application
         public static void AddApplicationModule(this IServiceCollection services)
         {
             services.AddSingleton<IClienteApplication, ClienteApplication>();
+            services.AddSingleton<IProdutoApplication, ProdutoApplication>();
         }
     }
 }

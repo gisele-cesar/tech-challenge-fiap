@@ -9,6 +9,7 @@ namespace fiap.Repositories
         {
             
             services.AddSingleton<IClienteRepository, ClienteRepository>();
+            services.AddSingleton<IProdutoRepository, ProdutoRepository>();
         }
     }
 }

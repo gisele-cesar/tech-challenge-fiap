@@ -36,9 +36,9 @@ namespace fiap.API.Controllers
         public async Task<IActionResult> Put([FromBody] Produto obj)
         {
             if (await _produtoApplication.Atualizar(obj))
-                return Ok(new { Mensagem = "Incluido com sucesso" });
+                return Ok(new { Mensagem = "Alterado com sucesso" });
 
-            return BadRequest(new { Mensagem = "Erro ao incluir" });
+            return BadRequest(new { Mensagem = "Erro ao alterar" });
         }
     }
 }
