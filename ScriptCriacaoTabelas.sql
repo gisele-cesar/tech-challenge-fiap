@@ -27,7 +27,7 @@ GO
 
 CREATE TABLE Cliente (
         IdCliente INT IDENTITY PRIMARY KEY,
-        NomeCliente VARCHAR(255) NOT NULL,
+        Nome VARCHAR(255) NOT NULL,
         Cpf VARCHAR(11) NOT NULL,
         Email VARCHAR(255) NOT NULL,
         DataCriacao DATETIME NOT NULL
@@ -35,24 +35,24 @@ CREATE TABLE Cliente (
 
 CREATE TABLE CategoriaProduto (
         IdCategoriaProduto INT IDENTITY PRIMARY KEY,
-        NomeCategoriaProduto VARCHAR(255) NOT NULL,
+        Nome VARCHAR(255) NOT NULL,
         DataCriacao DATETIME NOT NULL
     );
 
 CREATE TABLE Produto (
         IdProduto INT IDENTITY PRIMARY KEY,
         IdCategoriaProduto INT,
-        NomeProduto VARCHAR(255) NOT NULL,
-        DescricaoProduto VARCHAR(255) NOT NULL,
-        PrecoProduto DECIMAL NOT NULL,
+        Nome VARCHAR(255) NOT NULL,
+        Descricao VARCHAR(255) NOT NULL,
+        Preco DECIMAL NOT NULL,
         DataCriacao DATETIME NOT NULL,
         DataAlteracao DATETIME NOT NULL,
         CONSTRAINT FK_CategoriaProduto FOREIGN KEY (IdCategoriaProduto) REFERENCES CategoriaProduto(IdCategoriaProduto)
     );
 
     CREATE TABLE StatusPedido (
-        IdStatus INT IDENTITY PRIMARY KEY,
-        DescricaoStatus VARCHAR(50) NOT NULL
+        IdStatusPedido INT IDENTITY PRIMARY KEY,
+        Descricao VARCHAR(50) NOT NULL
     )
 
 
@@ -60,12 +60,12 @@ CREATE TABLE Produto (
         IdPedido INT IDENTITY PRIMARY KEY,
         IdCliente INT NOT NULL,
         NumeroPedido VARCHAR(255) NOT NULL,
-        IdStatus INT NOT NULL,
+        IdStatusPedido INT NOT NULL,
         ValorTotalPedido DECIMAL NOT NULL,
         DataCriacao DATETIME NOT NULL,
         DataAlteracao DATETIME NOT NULL,
         CONSTRAINT FK_Cliente FOREIGN KEY (IdCliente) REFERENCES Cliente(IdCliente),
-        CONSTRAINT FK_StatusPedido FOREIGN KEY (IdStatus) REFERENCES StatusPedido(IdStatus)
+        CONSTRAINT FK_StatusPedido FOREIGN KEY (IdStatusPedido) REFERENCES StatusPedido(IdStatusPedido)
     );
 
 
@@ -75,14 +75,16 @@ CREATE TABLE Produto (
     );
 
 go
+CREATE INDEX idx_cliente_cpf ON Cliente (Cpf);
+go
 
-INSERT INTO CategoriaProduto(NomeCategoriaProduto, DataCriacao)
+INSERT INTO CategoriaProduto(Nome, DataCriacao)
 VALUES ('Lanche', getdate()), 
 	   ('Acompanhamento', getdate()), 
 	   ('Bebida', getdate()), 
 	   ('Sobremesa', getdate());
 
-INSERT INTO StatusPedido(DescricaoStatus)
+INSERT INTO StatusPedido(Descricao)
 VALUES ('Recebido'), 
 	   ('Em preparação'), 
 	   ('Pronto'), 

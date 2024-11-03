@@ -13,22 +13,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra", "Infra", "{B2351465
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{B4C616FB-55C9-4CC6-9665-9F11D3404FE9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{9934B0B3-84C3-47B4-AA05-0C033AFAF0E2}"
-	ProjectSection(SolutionItems) = preProject
-		scripts\ScriptCriacaoTabelas.sql = scripts\ScriptCriacaoTabelas.sql
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D57CF421-1469-413C-AC01-DA26687B7318}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		Dockerfile = Dockerfile
+		ScriptCriacaoTabelas.sql = ScriptCriacaoTabelas.sql
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fiap.Repositories", "src\Adapters\Infra\fiap.Repositories\fiap.Repositories.csproj", "{BD424A9D-4527-4A32-B51A-7831A20341D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fiap.Repositories", "src\Adapters\Infra\fiap.Repositories\fiap.Repositories.csproj", "{BD424A9D-4527-4A32-B51A-7831A20341D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fiap.Application", "src\Core\fiap.Application\fiap.Application.csproj", "{2C5E416C-D6E1-4297-B1C8-6CE940998834}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fiap.Application", "src\Core\fiap.Application\fiap.Application.csproj", "{2C5E416C-D6E1-4297-B1C8-6CE940998834}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fiap.Domain", "src\Core\fiap.Domain\fiap.Domain.csproj", "{5B9045A4-54B0-47E0-B1D7-C0EC1A452388}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fiap.Domain", "src\Core\fiap.Domain\fiap.Domain.csproj", "{5B9045A4-54B0-47E0-B1D7-C0EC1A452388}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fiap.API", "src\Ports\fiap.API\fiap.API.csproj", "{F6209F9D-2778-43DD-BFD2-F438AF77D2AD}"
 EndProject
