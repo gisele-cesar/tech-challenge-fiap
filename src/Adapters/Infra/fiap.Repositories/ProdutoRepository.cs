@@ -35,11 +35,11 @@ namespace fiap.Repositories
                 {
                     IdProduto = (int)reader["IdProduto"],
                     IdCategoriaProduto = (int)reader["IdCategoriaProduto"],
-                    Nome = reader["NomeProduto"].ToString(),
+                    Nome = reader["Nome"].ToString(),
                     Descricao = reader["Descricao"].ToString(),
                     Preco = (decimal)reader["Preco"],
                     DataCriacao = (DateTime)reader["DataCriacao"],
-                    DataAlteracao = (DateTime)reader["DataAlteracao"]
+                    DataAlteracao = reader["DataAlteracao"] == DBNull.Value ? (DateTime?)null : (DateTime)reader["DataAlteracao"]
                 });
             }
             else
@@ -105,11 +105,11 @@ namespace fiap.Repositories
                 {
                     IdProduto = (int)reader["IdProduto"],
                     IdCategoriaProduto = (int)reader["IdCategoriaProduto"],
-                    Nome = reader["NomeProduto"].ToString(),
+                    Nome = reader["Nome"].ToString(),
                     Descricao = reader["Descricao"].ToString(),
                     Preco = (decimal)reader["Preco"],
                     DataCriacao = (DateTime)reader["DataCriacao"],
-                    DataAlteracao = (DateTime)reader["DataAlteracao"]
+                    DataAlteracao = reader["DataAlteracao"] == DBNull.Value ? (DateTime?)null : (DateTime)reader["DataAlteracao"]
                 });
             }
             return Task.FromResult(lst);
@@ -121,8 +121,11 @@ namespace fiap.Repositories
             connection.Open();
             var lst = new List<Produto>();
             using var command = connection.CreateCommand();
-            command.CommandText = "SELECT * FROM Produto" +
-                                   "WHERE IdCategoriaProduto = @idCategoriaProduto";
+            command.CommandText = "SELECT * FROM Produto WHERE IdCategoriaProduto = @idCategoriaProduto";
+            var param = command.CreateParameter();
+            param.ParameterName = "@idCategoriaProduto";
+            param.Value = idCategoriaProduto;
+            command.Parameters.Add(param);
 
             using var reader = command.ExecuteReader();
             while (reader.Read())
@@ -131,11 +134,11 @@ namespace fiap.Repositories
                 {
                     IdProduto = (int)reader["IdProduto"],
                     IdCategoriaProduto = (int)reader["IdCategoriaProduto"],
-                    Nome = reader["NomeProduto"].ToString(),
+                    Nome = reader["Nome"].ToString(),
                     Descricao = reader["Descricao"].ToString(),
                     Preco = (decimal)reader["Preco"],
                     DataCriacao = (DateTime)reader["DataCriacao"],
-                    DataAlteracao = (DateTime)reader["DataAlteracao"]
+                    DataAlteracao = reader["DataAlteracao"] == DBNull.Value ? (DateTime?)null : (DateTime)reader["DataAlteracao"]
                 });
             }
             return Task.FromResult(lst);

@@ -10,6 +10,6 @@ namespace fiap.Domain.Entities
         public string Descricao { get; set; }
         public decimal Preco { get; set; }
         public DateTime DataCriacao { get; set; }
-        public DateTime DataAlteracao { get; set; }
+        public DateTime? DataAlteracao { get; set; }
     }
 }

@@ -47,8 +47,8 @@ namespace fiap.API.Controllers
         }
 
         // GET: api/<ProdutoController>/5
-        [HttpGet()]
-        [Route("api/[controller]/idCategoriaProduto/{idCategoriaProduto}")]
+        [HttpGet("idCategoriaProduto/{idCategoriaProduto}")]
+        //[Route("api/[controller]/idCategoriaProduto/{idCategoriaProduto}")]
         public async Task<IActionResult> GetProdutosPorCategoria(int idCategoriaProduto)
         {
             return Ok(await _produtoApplication.ObterProdutosPorCategoria(idCategoriaProduto));

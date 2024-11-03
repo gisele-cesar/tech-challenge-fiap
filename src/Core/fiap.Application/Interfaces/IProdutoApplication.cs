@@ -8,8 +8,8 @@ namespace fiap.Application.Interfaces
     {
         Task<Produto> Obter(int id);
         Task<List<Produto>> Obter();
-        Task<bool> Inserir(Produto cliente);
-        Task<bool> Atualizar(Produto cliente);
+        Task<bool> Inserir(Produto produto);
+        Task<bool> Atualizar(Produto produto);
         Task<List<Produto>> ObterProdutosPorCategoria(int idCategoriaProduto);
     }
 }
