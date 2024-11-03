@@ -1,4 +1,5 @@
-﻿using fiap.Application.Interfaces;
+﻿using fiap.API.DTO;
+using fiap.Application.Interfaces;
 using fiap.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,8 +20,18 @@ namespace fiap.API.Controllers
             return Ok(await _pedidoApplication.ObterPedido(id));
         }
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Pedido obj)
+        public async Task<IActionResult> Post([FromBody] PedidoDTO pedido)
         {
+            var lstProdutos = new List<Produto>();
+
+            foreach (var item in pedido.ListaCodigoProduto) 
+                lstProdutos.Add(new Produto { IdProduto = item });
+           
+            var obj = new Pedido { Cliente = new Cliente { Id = pedido.IdCliente }
+            , Numero = pedido.NumeroPedido,
+             Produtos = lstProdutos,
+             StatusPedido = new StatusPedido { IdStatusPedido = 1 }
+            };
             if (await _pedidoApplication.Inserir(obj))
                 return Ok(new { Mensagem = "Incluido com sucesso" });
 
