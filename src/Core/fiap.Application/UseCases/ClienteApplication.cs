@@ -2,6 +2,7 @@
 using fiap.Domain.Entities;
 using fiap.Domain.Repositories.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace fiap.Application.UseCases
@@ -13,15 +14,23 @@ namespace fiap.Application.UseCases
         {
             _clienteRepository = clienteRepository;
         }
-        public async Task<bool> Salvar(Cliente cliente)
+        public async Task<bool> Inserir(Cliente cliente)
         {
-
-            return await _clienteRepository.Salvar(cliente);
+            return await _clienteRepository.Inserir(cliente);
         }
-        public async Task<Cliente> ObterPorId(int id)
+        public async Task<List<Cliente>> Obter()
         {
 
-            return await _clienteRepository.ObterPorId(id);
+            return await _clienteRepository.Obter();
+        }
+        public async Task<Cliente> Obter(int id)
+        {
+
+            return await _clienteRepository.Obter(id);
+        }
+        public async Task<bool> Atualizar(Cliente cliente)
+        {
+            return await _clienteRepository.Atualizar(cliente);
         }
     }
 }

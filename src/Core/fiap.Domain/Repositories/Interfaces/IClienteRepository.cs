@@ -1,11 +1,14 @@
 ﻿using fiap.Domain.Entities;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace fiap.Domain.Repositories.Interfaces
 {
     public interface IClienteRepository
     {
-        Task<Cliente> ObterPorId(int id);
-        Task<bool> Salvar(Cliente cliente);
+        Task<Cliente> Obter(int id);
+        Task<List<Cliente>> Obter();
+        Task<bool> Inserir(Cliente cliente);
+        Task<bool> Atualizar(Cliente cliente);
     }   
 }
