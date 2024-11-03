@@ -46,7 +46,7 @@ CREATE TABLE Produto (
         Descricao VARCHAR(255) NOT NULL,
         Preco DECIMAL NOT NULL,
         DataCriacao DATETIME NOT NULL,
-        DataAlteracao DATETIME NOT NULL,
+        DataAlteracao DATETIME NULL,
         CONSTRAINT FK_CategoriaProduto FOREIGN KEY (IdCategoriaProduto) REFERENCES CategoriaProduto(IdCategoriaProduto)
     );
 
