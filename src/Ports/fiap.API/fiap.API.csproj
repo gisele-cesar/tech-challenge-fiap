@@ -33,4 +33,10 @@
     <ProjectReference Include="..\..\Core\fiap.Domain\fiap.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Properties\launchSettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
