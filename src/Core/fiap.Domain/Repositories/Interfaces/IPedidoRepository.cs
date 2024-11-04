@@ -6,7 +6,9 @@ namespace fiap.Domain.Repositories.Interfaces
 {
     public interface IPedidoRepository
     {
+        Task<List<Pedido>> ObterPedidos();
         Task<Pedido> ObterPedido(int idPedido);
         Task<bool> Inserir(Pedido pedido);
+        Task<bool> Atualizar(Pedido pedido);
     }   
 }

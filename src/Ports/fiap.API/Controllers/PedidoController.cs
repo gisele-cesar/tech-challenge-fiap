@@ -14,6 +14,13 @@ namespace fiap.API.Controllers
         {
             _pedidoApplication = pedidoApplication;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            return Ok(await _pedidoApplication.ObterPedidos());
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -27,23 +34,39 @@ namespace fiap.API.Controllers
             foreach (var item in pedido.ListaCodigoProduto) 
                 lstProdutos.Add(new Produto { IdProduto = item });
            
-            var obj = new Pedido { Cliente = new Cliente { Id = pedido.IdCliente }
-            , Numero = pedido.NumeroPedido,
-             Produtos = lstProdutos,
-             StatusPedido = new StatusPedido { IdStatusPedido = 1 }
+            var obj = new Pedido 
+            {
+                Cliente = new Cliente { Id = pedido.IdCliente },
+                Numero = pedido.NumeroPedido,
+                Produtos = lstProdutos,
+                StatusPedido = new StatusPedido { IdStatusPedido = 1 }
             };
             if (await _pedidoApplication.Inserir(obj))
                 return Ok(new { Mensagem = "Incluido com sucesso" });
 
             return BadRequest(new { Mensagem = "Erro ao incluir" });
         }
-        //[HttpPut()]
-        //public async Task<IActionResult> Put([FromBody] Produto obj)
-        //{
-        //    if (await _produtoApplication.Atualizar(obj))
-        //        return Ok(new { Mensagem = "Alterado com sucesso" });
 
-        //    return BadRequest(new { Mensagem = "Erro ao alterar" });
-        //}
+        [HttpPut()]
+        public async Task<IActionResult> Put([FromBody] PedidoDTO pedido)
+        {
+            var lstProdutos = new List<Produto>();
+
+            foreach (var item in pedido.ListaCodigoProduto)
+                lstProdutos.Add(new Produto { IdProduto = item });
+            var obj = new Pedido
+            {
+                IdPedido = pedido.IdPedido,
+                Cliente = new Cliente { Id = pedido.IdCliente },
+                Numero = pedido.NumeroPedido,
+                Produtos = lstProdutos,
+                StatusPedido = new StatusPedido { IdStatusPedido = pedido.IdStatusPedido }
+            };
+
+            if (await _pedidoApplication.Atualizar(obj))
+                return Ok(new { Mensagem = "Alterado com sucesso" });
+
+            return BadRequest(new { Mensagem = "Erro ao alterar" });
+        }
     }
 }
