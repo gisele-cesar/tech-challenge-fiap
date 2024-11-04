@@ -13,7 +13,7 @@ services:
       - sqlserver
     volumes:
       - ./ScriptCriacaoTabelas.sql:/tmp/ScriptCriacaoTabelas.sql
-    command: /bin/bash -c "sleep 10 && /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P 9SO@T123 -d master -i /tmp/ScriptCriacaoTabelas.sql"
+    command: /bin/bash -c "sleep 20 && /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P 9SO@T123 -d master -i /tmp/ScriptCriacaoTabelas.sql"
   fiapapi:
     image: ${DOCKER_REGISTRY-}fiapapi
     build:
@@ -24,4 +24,4 @@ services:
     ports:
       - "8080:8080"
     depends_on: 
-    - sqlserver 
+      - sqlserver

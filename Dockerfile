@@ -4,6 +4,9 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
+#EXPOSE 8080
+#EXPOSE 443
+#EXPOSE 1433
 
 # This stage is used to build the service project
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
@@ -22,9 +25,9 @@ RUN dotnet publish "./fiap.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /
 
 RUN dotnet tool install -g Microsoft.dotnet-httprepl
 RUN dotnet dev-certs https --trust
-
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
 ENTRYPOINT ["dotnet", "fiap.API.dll"]
