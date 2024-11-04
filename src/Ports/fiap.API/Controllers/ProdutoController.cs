@@ -47,6 +47,15 @@ namespace fiap.API.Controllers
         /// Criar produto
         /// </summary>
         /// <remarks>
+        /// Ids Categoria de Produto:
+        /// 
+        ///     [
+        ///         1: Lanche,
+        ///         2: Acompanhamento,
+        ///         3: Bebida,
+        ///         4: Sobremesa
+        ///     ]
+        /// 
         /// Exemplo:
         /// 
         ///     POST /Produto
@@ -57,13 +66,6 @@ namespace fiap.API.Controllers
         ///         "preco": 15.50
         ///     }
         ///     
-        /// Ids Categoria de Produto:
-        ///     [
-        ///         Lanche = 1,
-        ///         Acompanhamento = 2,
-        ///         Bebida = 3,
-        ///         Sobremesa = 4
-        ///     ]
         /// </remarks>
         /// <param name="obj"></param>
         /// <returns>Um novo produto criado</returns>
@@ -84,6 +86,15 @@ namespace fiap.API.Controllers
         /// Alterar produto
         /// </summary>
         /// <remarks>
+        /// Ids Categoria de Produto:
+        /// 
+        ///     [
+        ///         1: Lanche,
+        ///         2: Acompanhamento,
+        ///         3: Bebida,
+        ///         4: Sobremesa
+        ///     ]
+        /// 
         /// Exemplo:
         /// 
         ///     PUT /Produto
@@ -92,18 +103,9 @@ namespace fiap.API.Controllers
         ///         "idCategoriaProduto": 1,
         ///         "nome": "X-Salada da casa",
         ///         "descricao": "Hamburguer com alface e tomate",
-        ///         "preco": 21.00,
-        ///         "dataCriacao": "2024-11-04T01:23:15.496Z",
-        ///         "dataAlteracao": "2024-11-04T01:23:15.496Z"
+        ///         "preco": 21.00
         ///     }
         ///
-        /// Ids Categoria de Produto:
-        ///     [
-        ///         Lanche = 1,
-        ///         Acompanhamento = 2,
-        ///         Bebida = 3,
-        ///         Sobremesa = 4
-        ///     ]
         /// </remarks>
         /// <param name="obj"></param>
         /// <returns>O produto alterado</returns>
@@ -126,11 +128,12 @@ namespace fiap.API.Controllers
         /// <remarks>
         /// 
         /// Ids Categoria de Produto:
+        /// 
         ///     [
-        ///         Lanche = 1,
-        ///         Acompanhamento = 2,
-        ///         Bebida = 3,
-        ///         Sobremesa = 4
+        ///         1: Lanche,
+        ///         2: Acompanhamento,
+        ///         3: Bebida,
+        ///         4: Sobremesa
         ///     ]
         /// </remarks>
         /// <param name="idCategoriaProduto">Id da Categoria de produto</param>
