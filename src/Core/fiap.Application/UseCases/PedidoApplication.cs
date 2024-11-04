@@ -14,6 +14,10 @@ namespace fiap.Application.UseCases
         {
             _pedidoRepository = pedidoRepository;
         }
+        public async Task<List<Pedido>> ObterPedidos()
+        {
+            return await _pedidoRepository.ObterPedidos();
+        }
         public async Task<bool> Inserir(Pedido pedido)
         {
             return await _pedidoRepository.Inserir(pedido);
@@ -23,9 +27,9 @@ namespace fiap.Application.UseCases
 
             return await _pedidoRepository.ObterPedido(idPedido);
         }
-        //public async Task<bool> Atualizar(Produto produto)
-        //{
-        //    return await _produtoRepository.Atualizar(produto);
-        //}
+        public async Task<bool> Atualizar(Pedido pedido)
+        {
+            return await _pedidoRepository.Atualizar(pedido);
+        }
     }
 }

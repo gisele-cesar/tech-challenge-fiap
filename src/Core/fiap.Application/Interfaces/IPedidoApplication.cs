@@ -6,7 +6,9 @@ namespace fiap.Application.Interfaces
 {
     public interface IPedidoApplication
     {
+        Task<List<Pedido>> ObterPedidos();
         Task<Pedido> ObterPedido(int idPedido);
         Task<bool> Inserir(Pedido pedido);
+        Task<bool> Atualizar(Pedido pedido);
     }
 }

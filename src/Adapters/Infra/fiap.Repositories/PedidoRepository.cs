@@ -18,6 +18,32 @@ namespace fiap.Repositories
             _clienteRepository = clienteRepository;
         }
 
+        public async Task<List<Pedido>> ObterPedidos()
+        {
+            using var connection = _connectionFactory();
+            connection.Open();
+            var lst = new List<Pedido>();
+            using var command = connection.CreateCommand();
+            command.CommandText = "SELECT * FROM Pedido";
+            using var reader = command.ExecuteReader();
+            while (reader.Read() ) {
+                // Map your data to your entity
+                lst.Add(new Pedido
+                {
+                    IdPedido = (int)reader["IdPedido"],
+                    Cliente = await _clienteRepository.Obter((int)reader["IdCliente"]),
+                    Numero = reader["NumeroPedido"].ToString(),
+                    StatusPedido = new StatusPedido
+                    {
+                        IdStatusPedido = (int)reader["IdStatusPedido"],
+                        Descricao = reader["DescricaoStatusPedido"].ToString()
+                    },
+                    Produtos = await ObterItemPedido((int)reader["IdPedido"])
+                });
+            }
+            return await Task.FromResult(lst);
+        }
+
         public async Task<Pedido> ObterPedido(int idPedido)
         {
             using var connection = _connectionFactory();
@@ -130,6 +156,54 @@ namespace fiap.Repositories
 
             return Task.FromResult(true);
 
+        }
+
+        public Task<bool> Atualizar(Pedido pedido)
+        {
+            using var connection = _connectionFactory();
+            connection.Open();
+            using (var transaction = connection.BeginTransaction())
+            {
+                try
+                {
+                    // Execute your query
+                    StringBuilder sb = new StringBuilder();
+                    using var command = connection.CreateCommand();
+                    command.Transaction = transaction;
+                    sb.Append("update Pedido set IdStatusPedido = @idStatusPedido,");
+                    sb.Append("ValorTotal = @valorTotal, DataAlteracao = getdate()");
+                    sb.Append("where IdPedido = @idPedido");
+                    command.CommandText = sb.ToString();
+
+                    command.Parameters.Add(new SqlParameter { ParameterName = "@idPedido", Value = pedido.IdPedido, SqlDbType = SqlDbType.Int });
+                    command.Parameters.Add(new SqlParameter { ParameterName = "@idStatusPedido", Value = pedido.StatusPedido.IdStatusPedido, SqlDbType = SqlDbType.Int });
+                    command.Parameters.Add(new SqlParameter { ParameterName = "@valorTotal", Value = pedido.ValorTotal, SqlDbType = SqlDbType.Decimal });
+
+                    command.ExecuteNonQuery();
+
+                    foreach (var item in pedido.Produtos)
+                    {
+                        using var command2 = connection.CreateCommand();
+                        command2.Transaction = transaction;
+                        command2.CommandText = "update ItemPedido values(@idPedido, @idProduto)";
+
+                        command2.Parameters.Add(new SqlParameter { ParameterName = "@idPedido", Value = pedido.IdPedido, SqlDbType = SqlDbType.Int });
+                        command2.Parameters.Add(new SqlParameter { ParameterName = "@idProduto", Value = item.IdProduto, SqlDbType = SqlDbType.Int });
+
+                        command2.ExecuteNonQuery();
+
+                    }
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    Console.WriteLine($"Erro: {ex.Message}");
+                    return Task.FromResult(false);
+                }
+            }
+
+            return Task.FromResult(true);
         }
     }
 
