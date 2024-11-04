@@ -66,8 +66,8 @@ namespace fiap.API.Controllers
         ///     POST /Cliente
         ///     {
         ///         "Nome": "Maria",
-        ///         "email": "teste@yahoo.com.br",
-        ///         "cpf": "12345678910"
+        ///         "cpf": "12345678910",
+        ///         "email": "teste@yahoo.com.br"   
         ///     }
         /// 
         /// </remarks>
@@ -96,8 +96,8 @@ namespace fiap.API.Controllers
         ///     {
         ///         "idCliente": 1,
         ///         "nome": "Maria Silva",
-        ///         "email": "teste2@yahoo.com.br",
         ///         "cpf": "12345678910"
+        ///         "email": "teste2@yahoo.com.br"      
         ///     }
         ///     
         /// </remarks>
