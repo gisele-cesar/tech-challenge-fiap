@@ -24,7 +24,7 @@ namespace fiap.Repositories
             connection.Open();
             var lst = new List<Pedido>();
             using var command = connection.CreateCommand();
-            command.CommandText = "SELECT * FROM Pedido";
+            command.CommandText = "SELECT p.* , sp.Descricao DescricaoStatusPedido FROM Pedido p join StatusPedido sp on p.IdStatusPedido = sp.IdStatusPedido";
             using var reader = command.ExecuteReader();
             while (reader.Read() ) {
                 // Map your data to your entity
@@ -171,28 +171,15 @@ namespace fiap.Repositories
                     using var command = connection.CreateCommand();
                     command.Transaction = transaction;
                     sb.Append("update Pedido set IdStatusPedido = @idStatusPedido,");
-                    sb.Append("ValorTotal = @valorTotal, DataAlteracao = getdate()");
+                    sb.Append("DataAlteracao = getdate()");
                     sb.Append("where IdPedido = @idPedido");
                     command.CommandText = sb.ToString();
 
                     command.Parameters.Add(new SqlParameter { ParameterName = "@idPedido", Value = pedido.IdPedido, SqlDbType = SqlDbType.Int });
                     command.Parameters.Add(new SqlParameter { ParameterName = "@idStatusPedido", Value = pedido.StatusPedido.IdStatusPedido, SqlDbType = SqlDbType.Int });
-                    command.Parameters.Add(new SqlParameter { ParameterName = "@valorTotal", Value = pedido.ValorTotal, SqlDbType = SqlDbType.Decimal });
 
                     command.ExecuteNonQuery();
 
-                    foreach (var item in pedido.Produtos)
-                    {
-                        using var command2 = connection.CreateCommand();
-                        command2.Transaction = transaction;
-                        command2.CommandText = "update ItemPedido values(@idPedido, @idProduto)";
-
-                        command2.Parameters.Add(new SqlParameter { ParameterName = "@idPedido", Value = pedido.IdPedido, SqlDbType = SqlDbType.Int });
-                        command2.Parameters.Add(new SqlParameter { ParameterName = "@idProduto", Value = item.IdProduto, SqlDbType = SqlDbType.Int });
-
-                        command2.ExecuteNonQuery();
-
-                    }
                     transaction.Commit();
                 }
                 catch (Exception ex)
