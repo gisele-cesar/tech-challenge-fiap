@@ -122,7 +122,8 @@ namespace fiap.API.Controllers
             var obj = new Pedido
             {
                 IdPedido = pedido.IdPedido,
-                StatusPedido = new StatusPedido { IdStatusPedido = pedido.IdStatusPedido }
+                StatusPedido = new StatusPedido { IdStatusPedido = pedido.IdStatusPedido },
+                Produtos = lstProdutos
             };
 
             if (await _pedidoApplication.Atualizar(obj))

@@ -171,12 +171,13 @@ namespace fiap.Repositories
                     using var command = connection.CreateCommand();
                     command.Transaction = transaction;
                     sb.Append("update Pedido set IdStatusPedido = @idStatusPedido,");
-                    sb.Append("ValorTotal = @valorTotal, DataAlteracao = getdate() ");
+                    sb.Append(" ValorTotalPedido = @valorTotalPedido, DataAlteracao = getdate() ");
                     sb.Append("where IdPedido = @idPedido");
                     command.CommandText = sb.ToString();
 
                     command.Parameters.Add(new SqlParameter { ParameterName = "@idPedido", Value = pedido.IdPedido, SqlDbType = SqlDbType.Int });
                     command.Parameters.Add(new SqlParameter { ParameterName = "@idStatusPedido", Value = pedido.StatusPedido.IdStatusPedido, SqlDbType = SqlDbType.Int });
+                    command.Parameters.Add(new SqlParameter { ParameterName = "@valorTotalPedido", Value = pedido.ValorTotal, SqlDbType = SqlDbType.Decimal });
 
                     command.ExecuteNonQuery();
 
