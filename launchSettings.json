@@ -6,7 +6,7 @@
       "serviceActions": {
         "fiapapi": "StartWithoutDebugging",
         "mssqltools": "StartWithoutDebugging",
-        "sqlserver": "StartWithoutDebugging"
+        "sqlserverfiap": "StartWithoutDebugging"
       }
     }
   }

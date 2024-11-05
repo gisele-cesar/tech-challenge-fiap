@@ -1,3 +1,5 @@
+USE [master]; 
+GO 
 
 IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'PosTechFiap')
   CREATE DATABASE PosTechFiap;
@@ -5,6 +7,18 @@ GO
 
 USE PosTechFiap;
 GO
+
+IF NOT EXISTS(SELECT principal_id FROM sys.server_principals WHERE name = 'postech') BEGIN
+    CREATE LOGIN postech WITH PASSWORD = '@PassW0rd#';
+    print 'login criado'
+END
+
+IF NOT EXISTS(SELECT principal_id FROM sys.database_principals WHERE name = 'postech') BEGIN
+    CREATE USER postech FOR LOGIN postech;
+    EXEC sp_addrolemember N'db_owner', N'postech';
+    print 'usuário criado e adicionado no grupo dbo'
+END
+go
 
 IF EXISTS (SELECT * FROM sys.tables WHERE name = 'Pedido')
 	DROP TABLE Pedido;

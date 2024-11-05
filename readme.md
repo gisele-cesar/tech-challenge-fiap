@@ -1,0 +1,1 @@
+docker compose  -f "C:\Projetos\tech-challenge-fiap\docker-compose.yml" -p tech-challenge-fiap --ansi never up -d --build --remove-orphans  fiapapi mssqltools sqlserver
