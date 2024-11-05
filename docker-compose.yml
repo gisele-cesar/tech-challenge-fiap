@@ -1,0 +1,29 @@
+services:
+  sqlserverfiap:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    hostname: sqlserverfiap
+    environment: 
+      SA_PASSWORD: "@PassW0rd#"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
+  mssqltools:
+    image: mcr.microsoft.com/mssql-tools
+    # depends_on:
+    #   - sqlserverfiap
+    volumes:
+      - ./ScriptCriacaoTabelas.sql:/tmp/ScriptCriacaoTabelas.sql
+    command: /bin/bash -c "sleep 30 && /opt/mssql-tools/bin/sqlcmd -S sqlserverfiap -U sa -P @PassW0rd# -d master -i /tmp/ScriptCriacaoTabelas.sql"
+  fiapapi:
+    image: ${DOCKER_REGISTRY-}fiapapi
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DATABASE_PUBLIC_URL=sqlserverfiap
+    ports:
+      - "8080:8080"
+    # depends_on: 
+    #   - sqlserverfiap
