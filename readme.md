@@ -38,6 +38,8 @@ cd tech-challenge-fiap
 
 2. Construa e execute os contêineres usando Docker Compose:
 
+   Obs.: Inicialize o docker para executar o comando a seguir:
+
 ```bash
 docker-compose up
 ```
