@@ -24,7 +24,7 @@ namespace fiap.Repositories
             connection.Open();
             var lst = new List<Pedido>();
             using var command = connection.CreateCommand();
-            command.CommandText = "SELECT * FROM Pedido";
+            command.CommandText = "SELECT p.* , sp.Descricao DescricaoStatusPedido FROM Pedido p join StatusPedido sp on p.IdStatusPedido = sp.IdStatusPedido";
             using var reader = command.ExecuteReader();
             while (reader.Read() ) {
                 // Map your data to your entity
@@ -177,7 +177,6 @@ namespace fiap.Repositories
 
                     command.Parameters.Add(new SqlParameter { ParameterName = "@idPedido", Value = pedido.IdPedido, SqlDbType = SqlDbType.Int });
                     command.Parameters.Add(new SqlParameter { ParameterName = "@idStatusPedido", Value = pedido.StatusPedido.IdStatusPedido, SqlDbType = SqlDbType.Int });
-                    command.Parameters.Add(new SqlParameter { ParameterName = "@valorTotal", Value = pedido.ValorTotal, SqlDbType = SqlDbType.Decimal });
 
                     command.ExecuteNonQuery();
 

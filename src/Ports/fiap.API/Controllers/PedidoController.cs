@@ -56,7 +56,7 @@ namespace fiap.API.Controllers
         ///     {
         ///         "idCliente": 1,
         ///         "numeroPedido": "1234",
-        ///         "listaCodigoProduto": [1, 2, 4]
+        ///         "listaCodigoProduto": [1]
         ///     }
         /// </remarks>
         /// <param name="pedido"></param>
@@ -86,13 +86,9 @@ namespace fiap.API.Controllers
         }
 
         /// <summary>
-        /// Alterar pedido
+        /// Atualizar status pedido
         /// </summary>
-        /// <remarks>
-        /// param listaCodigoProduto:
-        /// 
-        ///     [idProduto1, idProduto2]
-        ///     
+        /// <remarks>   
         /// Ids Status Pedido:
         /// 
         ///     [
@@ -107,16 +103,13 @@ namespace fiap.API.Controllers
         ///     PUT /Pedido
         ///     {
         ///         "idPedido": 1,
-        ///         "idCliente": 2,
-        ///         "numeroPedido": "1234",
-        ///         "idStatusPedido": 2,
-        ///         "listaCodigoProduto": [1, 2, 4]
+        ///         "idStatusPedido": 2
         ///     }
         ///     
         /// </remarks>
         /// <param name="pedido"></param>
         /// <returns>Pedido alterado</returns>
-        /// <response code = "200">Retorna o pedido alterado</response>
+        /// <response code = "200">Retorna se o pedido for alterado</response>
         /// <response code = "400">Se houver erro na alteração do pedido</response>
         /// <response code = "500">Se houver erro de conexão com banco de dados</response>
         [HttpPut()]
@@ -129,9 +122,6 @@ namespace fiap.API.Controllers
             var obj = new Pedido
             {
                 IdPedido = pedido.IdPedido,
-                Cliente = new Cliente { Id = pedido.IdCliente },
-                Numero = pedido.NumeroPedido,
-                Produtos = lstProdutos,
                 StatusPedido = new StatusPedido { IdStatusPedido = pedido.IdStatusPedido }
             };
 

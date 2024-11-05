@@ -14,7 +14,7 @@ services:
     #   - sqlserverfiap
     volumes:
       - ./ScriptCriacaoTabelas.sql:/tmp/ScriptCriacaoTabelas.sql
-    command: /bin/bash -c " sleep 15s && /opt/mssql-tools/bin/sqlcmd -S sqlserverfiap -U sa -P @PassW0rd# -d master -i /tmp/ScriptCriacaoTabelas.sql"
+    command: /bin/bash -c "sleep 30 && /opt/mssql-tools/bin/sqlcmd -S sqlserverfiap -U sa -P @PassW0rd# -d master -i /tmp/ScriptCriacaoTabelas.sql"
   fiapapi:
     image: ${DOCKER_REGISTRY-}fiapapi
     build:

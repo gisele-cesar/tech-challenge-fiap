@@ -65,7 +65,7 @@ namespace fiap.API.Controllers
         /// 
         ///     POST /Cliente
         ///     {
-        ///         "Nome": "Maria",
+        ///         "nome": "Maria",
         ///         "cpf": "12345678910",
         ///         "email": "teste@yahoo.com.br"   
         ///     }
@@ -94,15 +94,18 @@ namespace fiap.API.Controllers
         /// 
         ///     PUT /Cliente
         ///     {
-        ///         "idCliente": 1,
+        ///         "id": 1,
         ///         "nome": "Maria Silva",
-        ///         "cpf": "12345678910"
+        ///         "cpf": "12345678910",
         ///         "email": "teste2@yahoo.com.br"      
         ///     }
         ///     
         /// </remarks>
         /// <param name="cliente"></param>
-        /// <returns></returns>
+        /// <returns>Cadstro cliente alterado</returns>
+        /// <response code = "200">Retorna o cadastrado do cliente alterado</response>
+        /// <response code = "400">Se houver erro ao alterar o cadastro do cliente</response>
+        /// <response code = "500">Se houver erro de conexão com banco de dados</response> 
         // PUT api/<ClienteController>/5
         [HttpPut()]
         public async Task<IActionResult> Put([FromBody] Cliente cliente)
