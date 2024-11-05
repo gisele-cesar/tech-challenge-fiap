@@ -106,7 +106,7 @@ namespace fiap.API.Controllers
         /// 
         ///     PUT /Pedido
         ///     {
-        ///         "idPedido": 1
+        ///         "idPedido": 1,
         ///         "idCliente": 2,
         ///         "numeroPedido": "1234",
         ///         "idStatusPedido": 2,
