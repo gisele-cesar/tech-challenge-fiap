@@ -5,7 +5,6 @@ namespace fiap.Domain.Entities
 {
     public class Produto
     {
-        [JsonIgnore]
         public int IdProduto { get; set; }
         public int IdCategoriaProduto { get; set; }
         public string Nome { get; set; }
