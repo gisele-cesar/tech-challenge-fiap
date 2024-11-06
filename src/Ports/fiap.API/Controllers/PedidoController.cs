@@ -98,12 +98,19 @@ namespace fiap.API.Controllers
         ///         4: Finalizado
         ///     ]
         /// 
+        /// param listaCodigoProduto:
+        /// 
+        ///     [idProduto1, idProduto2]
+        /// 
         /// Exemplo:
         /// 
         ///     PUT /Pedido
         ///     {
         ///         "idPedido": 1,
-        ///         "idStatusPedido": 2
+        ///         "idCliente": 1,
+        ///         "numeroPedido": "1234",
+        ///         "idStatusPedido": 2,
+        ///         "listaCodigoProduto": [1, 2]
         ///     }
         ///     
         /// </remarks>
@@ -122,7 +129,8 @@ namespace fiap.API.Controllers
             var obj = new Pedido
             {
                 IdPedido = pedido.IdPedido,
-                StatusPedido = new StatusPedido { IdStatusPedido = pedido.IdStatusPedido }
+                StatusPedido = new StatusPedido { IdStatusPedido = pedido.IdStatusPedido },
+                Produtos = lstProdutos
             };
 
             if (await _pedidoApplication.Atualizar(obj))
