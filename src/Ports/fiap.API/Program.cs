@@ -1,8 +1,10 @@
 using fiap.Application;
 using fiap.Repositories;
+using fiap.Services;
 using System.Data.SqlClient;
 using System.Data;
 using System.Reflection;
+using fiap.Domain.Services.Interfaces;
 
 
 
@@ -24,9 +26,35 @@ builder.Services.AddHealthChecks();
 
 // Adiciona injeção de dependência no Application
 builder.Services.AddApplicationModule();
+builder.Services.AddServicesModule();
 
-builder.Services.AddTransient<Func<IDbConnection>>(sp => () =>
-            new SqlConnection(builder.Configuration.GetConnectionString("fiap.sqlServer")));
+//builder.Services.AddTransient<Func<IDbConnection>>(sp => () =>
+//            new SqlConnection(builder.Configuration.GetConnectionString("fiap.sqlServer")));
+
+builder.Services.AddSingleton<Func<IDbConnection>>( sp => { 
+    var configuration = sp.GetRequiredService<IConfiguration>(); 
+    
+    
+    
+    var connectionString = configuration.GetConnectionString("fiap.sqlServer");
+
+    var secretService = sp.GetRequiredService<ISecretManagerService>();
+
+    var secret = secretService.ObterSecret("dev/fiap/sql-rds").Result;
+
+    if (secret.Host is null) throw new Exception("Não foi possível recuperar a secret");
+
+    connectionString = connectionString
+    .Replace("__server__", secret.Host)
+    .Replace("__port__", secret.Port)
+    .Replace("__db__", secret.DbInstanceIdentifier)
+    .Replace("__userdb__", secret.UserName)
+    .Replace("__senha__", secret.Password);
+
+    return () => new SqlConnection(connectionString); 
+});
+
+
 builder.Services.AddRepositoriesModule();
 var app = builder.Build();
 
