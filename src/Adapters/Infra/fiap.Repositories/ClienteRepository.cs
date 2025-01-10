@@ -1,5 +1,6 @@
 ﻿using fiap.Domain.Entities;
 using fiap.Domain.Repositories.Interfaces;
+using Serilog;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
@@ -9,9 +10,11 @@ namespace fiap.Repositories
     public class ClienteRepository : IClienteRepository
     {
         private readonly Func<IDbConnection> _connectionFactory;
+        private readonly ILogger _logger;
 
-        public ClienteRepository(Func<IDbConnection> connectionFactory)
+        public ClienteRepository(ILogger logger, Func<IDbConnection> connectionFactory)
         {
+            _logger = logger;
             _connectionFactory = connectionFactory;
         }
 
@@ -86,6 +89,7 @@ namespace fiap.Repositories
         {
             using var connection = _connectionFactory();
             connection.Open();
+            _logger.Information("Conexão com o banco de dados realizada com sucesso");
             var lst = new List<Cliente>();
             using var command = connection.CreateCommand();
             command.CommandText = "SELECT * FROM Cliente";
@@ -102,6 +106,7 @@ namespace fiap.Repositories
                     Email = reader["Email"].ToString()
                 });
             }
+            _logger.Information("Retornando lista com os clientes encontrados ou []");
             return Task.FromResult(lst);
         }
 

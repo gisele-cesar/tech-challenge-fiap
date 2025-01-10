@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Reflection;
 using fiap.Domain.Services.Interfaces;
-
+using Serilog;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +15,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateBootstrapLogger();
+
 builder.Services.AddSwaggerGen(c =>
     {
         c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "FIAP - Tech Challenge", Version = "v1" });
@@ -33,16 +41,17 @@ builder.Services.AddServicesModule();
 
 builder.Services.AddSingleton<Func<IDbConnection>>( sp => { 
     var configuration = sp.GetRequiredService<IConfiguration>(); 
-    
-    
-    
     var connectionString = configuration.GetConnectionString("fiap.sqlServer");
-
     var secretService = sp.GetRequiredService<ISecretManagerService>();
 
     var secret = secretService.ObterSecret("dev/fiap/sql-rds").Result;
 
-    if (secret.Host is null) throw new Exception("Não foi possível recuperar a secret");
+    if (secret.Host is null)
+    {
+        Console.WriteLine("Não foi possível recuperar a secret - Console.WriteLine"); ;
+        Log.Information("Não foi possível recuperar a secret Serilog");
+        throw new Exception("Não foi possível recuperar a secret - Lançada excecao"); 
+    }
 
     connectionString = connectionString
     .Replace("__server__", secret.Host)
@@ -69,7 +78,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseSerilogRequestLogging();
 app.UseAuthorization();
 app.UseRouting();
 app.UseEndpoints(endpoints =>
@@ -78,4 +87,5 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
 });
 
+Log.Information("Iniciando aplicação");
 app.Run();
