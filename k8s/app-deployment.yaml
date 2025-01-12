@@ -10,7 +10,6 @@ spec:
   selector:
     matchLabels:
       app: fiap-fase-2
-
   template:
     metadata:
       labels:
