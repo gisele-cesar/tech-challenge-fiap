@@ -26,10 +26,10 @@ spec:
         env: 
         - name: "ASPNETCORE_ENVIROMENT"
           value: "Development"
-        - name : "ASPNETCORE_HTTP_PORTS"
-          value: "5099"
-        - name : "ASPNETCORE_HTTPS_PORTS"
-          value: "443"
+        # - name : "ASPNETCORE_HTTP_PORTS"
+        #   value: "5099"
+        # - name : "ASPNETCORE_HTTPS_PORTS"
+        #   value: "443"
   strategy:
     type: RollingUpdate
     rollingUpdate:
