@@ -86,6 +86,7 @@ app.UseRouting();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapHealthChecks("api/health");
+    endpoints.MapHealthChecks("api/metrics");
     endpoints.MapControllers();
 });
 
