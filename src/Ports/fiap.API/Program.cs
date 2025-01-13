@@ -67,19 +67,14 @@ builder.Services.AddSingleton<Func<IDbConnection>>( sp => {
 builder.Services.AddRepositoriesModule();
 var app = builder.Build();
 
-    app.UseSwagger();
-    app.UseSwaggerUI(opt =>
-    {
-        opt.SwaggerEndpoint("/swagger/v1/swagger.json", "FIAP - Tech Challenge V1");
-
-        if (!app.Environment.IsDevelopment())
-        {
-            opt.RoutePrefix = "";
-        }
-    });
+app.UseSwagger();
+app.UseSwaggerUI(opt =>
+{
+    opt.SwaggerEndpoint("/swagger/v1/swagger.json", "FIAP - Tech Challenge V1");
+});
 
 
-///app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 app.UseSerilogRequestLogging();
 app.UseAuthorization();
 app.UseRouting();
