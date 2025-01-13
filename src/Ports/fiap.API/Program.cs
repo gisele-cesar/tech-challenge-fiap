@@ -77,7 +77,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();
+///app.UseHttpsRedirection();
 app.UseSerilogRequestLogging();
 app.UseAuthorization();
 app.UseRouting();
