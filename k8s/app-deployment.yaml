@@ -22,12 +22,10 @@ spec:
         image: DOCKER_IMAGE
         imagePullPolicy: Always
         ports:
-        - name: http
+        - name: http-80
+          protocol: TCP
           port: 80
-          targetPort: 8080
-        - name: https
-          port: 443
-          targetPort: 8080
+          targetPort: 80
   strategy:
     type: RollingUpdate
     rollingUpdate:
