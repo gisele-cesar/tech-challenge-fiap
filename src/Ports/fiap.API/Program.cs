@@ -67,15 +67,17 @@ builder.Services.AddSingleton<Func<IDbConnection>>( sp => {
 builder.Services.AddRepositoriesModule();
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
     app.UseSwagger();
     app.UseSwaggerUI(opt =>
     {
         opt.SwaggerEndpoint("/swagger/v1/swagger.json", "FIAP - Tech Challenge V1");
+
+        if (!app.Environment.IsDevelopment())
+        {
+            opt.RoutePrefix = "";
+        }
     });
-}
+
 
 ///app.UseHttpsRedirection();
 app.UseSerilogRequestLogging();
