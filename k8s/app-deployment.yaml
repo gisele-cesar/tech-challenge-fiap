@@ -30,8 +30,6 @@ spec:
           value: "80"
         - name : "ASPNETCORE_HTTPS_PORTS"
           value: "443"
-        - name : "ASPNETCORE_URLS"
-          value: "http://*:80"
   strategy:
     type: RollingUpdate
     rollingUpdate:
