@@ -4,8 +4,8 @@ using fiap.Services;
 using System.Data.SqlClient;
 using System.Data;
 using System.Reflection;
-using fiap.Domain.Services.Interfaces;
 using Serilog;
+using fiap.Domain.Interfaces;
 
 
 var builder = WebApplication.CreateBuilder(args);

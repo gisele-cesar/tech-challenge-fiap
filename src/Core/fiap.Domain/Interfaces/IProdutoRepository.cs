@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace fiap.Domain.Repositories.Interfaces
+namespace fiap.Domain.Interfaces
 {
     public interface IProdutoRepository
     {
@@ -11,5 +11,5 @@ namespace fiap.Domain.Repositories.Interfaces
         Task<bool> Inserir(Produto produto);
         Task<bool> Atualizar(Produto produto);
         Task<List<Produto>> ObterProdutosPorCategoria(int idCategoriaProduto);
-    }   
+    }
 }

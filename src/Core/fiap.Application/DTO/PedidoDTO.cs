@@ -1,6 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.Generic;
 
-namespace fiap.API.DTO
+namespace fiap.Application.DTO
 {
     public class PedidoDTO
     {

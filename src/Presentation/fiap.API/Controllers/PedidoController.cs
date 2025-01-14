@@ -1,4 +1,4 @@
-﻿using fiap.API.DTO;
+﻿using fiap.Application.DTO;
 using fiap.Application.Interfaces;
 using fiap.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;

@@ -1,6 +1,6 @@
 ﻿using Amazon;
 using Amazon.SecretsManager;
-using fiap.Domain.Services.Interfaces;
+using fiap.Domain.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace fiap.Services

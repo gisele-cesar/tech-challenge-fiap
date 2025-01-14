@@ -1,6 +1,6 @@
 ﻿using fiap.Application.Interfaces;
 using fiap.Domain.Entities;
-using fiap.Domain.Repositories.Interfaces;
+using fiap.Domain.Interfaces;
 using Serilog;
 using System.Collections.Generic;
 using System.Threading.Tasks;

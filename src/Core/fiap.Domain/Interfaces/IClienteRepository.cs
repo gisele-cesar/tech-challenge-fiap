@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace fiap.Domain.Repositories.Interfaces
+namespace fiap.Domain.Interfaces
 {
     public interface IClienteRepository
     {
@@ -11,5 +11,5 @@ namespace fiap.Domain.Repositories.Interfaces
         Task<Cliente> ObterPorCpf(string cpf);
         Task<bool> Inserir(Cliente cliente);
         Task<bool> Atualizar(Cliente cliente);
-    }   
+    }
 }

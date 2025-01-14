@@ -1,4 +1,4 @@
-﻿using fiap.Domain.Repositories.Interfaces;
+﻿using fiap.Domain.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace fiap.Repositories

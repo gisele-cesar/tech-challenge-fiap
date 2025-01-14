@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace fiap.Domain.Services
+namespace fiap.Domain.Entities
 {
     public class SecretDbConnect
     {

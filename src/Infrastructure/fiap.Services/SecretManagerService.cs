@@ -1,7 +1,7 @@
 ﻿using Amazon.SecretsManager;
 using Amazon.SecretsManager.Model;
-using fiap.Domain.Services;
-using fiap.Domain.Services.Interfaces;
+using fiap.Domain.Entities;
+using fiap.Domain.Interfaces;
 using Serilog;
 using System.Text.Json;
 

@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
+using fiap.Domain.Entities;
 
-namespace fiap.Domain.Services.Interfaces
+namespace fiap.Domain.Interfaces
 {
     public interface ISecretManagerService
     {

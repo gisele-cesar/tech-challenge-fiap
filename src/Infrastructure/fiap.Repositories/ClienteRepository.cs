@@ -1,5 +1,5 @@
 ﻿using fiap.Domain.Entities;
-using fiap.Domain.Repositories.Interfaces;
+using fiap.Domain.Interfaces;
 using Serilog;
 using System.Data;
 using System.Data.SqlClient;

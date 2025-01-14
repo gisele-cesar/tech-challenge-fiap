@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace fiap.Domain.Repositories.Interfaces
+namespace fiap.Domain.Interfaces
 {
     public interface IPedidoRepository
     {
@@ -10,5 +10,5 @@ namespace fiap.Domain.Repositories.Interfaces
         Task<Pedido> ObterPedido(int idPedido);
         Task<bool> Inserir(Pedido pedido);
         Task<bool> Atualizar(Pedido pedido);
-    }   
+    }
 }
