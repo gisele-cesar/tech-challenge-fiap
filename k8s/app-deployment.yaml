@@ -1,0 +1,37 @@
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: fiap-fase-2
+  labels: 
+     app: fiap-fase-2
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fiap-fase-2
+      version: v01
+  template:
+    metadata:
+      labels:
+        app: fiap-fase-2
+        version: v01
+    spec:
+      containers:
+      - name: fiap-fase-2
+        image: DOCKER_IMAGE
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        env: 
+        - name: "ASPNETCORE_ENVIROMENT"
+          value: "Development"
+        # - name : "ASPNETCORE_HTTP_PORTS"
+        #   value: "5099"
+        # - name : "ASPNETCORE_HTTPS_PORTS"
+        #   value: "443"
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1

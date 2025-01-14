@@ -1,7 +1,7 @@
 ﻿using fiap.Application.Interfaces;
 using fiap.Domain.Entities;
 using fiap.Domain.Repositories.Interfaces;
-using System;
+using Serilog;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,9 +9,11 @@ namespace fiap.Application.UseCases
 {
     public class ClienteApplication : IClienteApplication
     {
+        private readonly ILogger _logger;
         private readonly IClienteRepository _clienteRepository;
-        public ClienteApplication(IClienteRepository clienteRepository)
+        public ClienteApplication(ILogger logger, IClienteRepository clienteRepository)
         {
+            _logger = logger;
             _clienteRepository = clienteRepository;
         }
         public async Task<bool> Inserir(Cliente cliente)
@@ -20,7 +22,7 @@ namespace fiap.Application.UseCases
         }
         public async Task<List<Cliente>> Obter()
         {
-
+            _logger.Information("Buscando lista de clientes");
             return await _clienteRepository.Obter();
         }
         public async Task<Cliente> Obter(int id)

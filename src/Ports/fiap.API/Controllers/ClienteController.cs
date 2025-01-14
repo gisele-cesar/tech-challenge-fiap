@@ -8,9 +8,11 @@ namespace fiap.API.Controllers
     [ApiController]
     public class ClienteController : ControllerBase
     {
+        private readonly Serilog.ILogger _logger;
         private readonly IClienteApplication _clienteApplication;
-        public ClienteController(IClienteApplication clienteApplication)
+        public ClienteController(Serilog.ILogger logger, IClienteApplication clienteApplication)
         {
+            _logger = logger;
             _clienteApplication = clienteApplication;
         }
 
@@ -25,6 +27,7 @@ namespace fiap.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
+            _logger.Information("Buscando lista de clientes");
             return Ok(await _clienteApplication.Obter());
         }
 

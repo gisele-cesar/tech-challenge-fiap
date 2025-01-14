@@ -11,11 +11,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ports", "Ports", "{EEC85BE4
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra", "Infra", "{B2351465-BB46-4E18-B227-F1D4BE1E509D}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{B4C616FB-55C9-4CC6-9665-9F11D3404FE9}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D57CF421-1469-413C-AC01-DA26687B7318}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		.github\workflows\deploy.yaml = .github\workflows\deploy.yaml
 		Dockerfile = Dockerfile
 		readme.md = readme.md
 		ScriptCriacaoTabelas.sql = ScriptCriacaoTabelas.sql
@@ -31,16 +30,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fiap.API", "src\Ports\fiap.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fiap.Services", "src\Adapters\Infra\fiap.Services\fiap.Services.csproj", "{C59A04C5-0C04-4725-AA58-2A8D7466BB4C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{2336E2F1-353B-44A2-847A-3480A13EC6BB}"
+	ProjectSection(SolutionItems) = preProject
+		k8s\app-deployment.yaml = k8s\app-deployment.yaml
+		k8s\app-service-account.yaml = k8s\app-service-account.yaml
+		k8s\app-service.yaml = k8s\app-service.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B4C616FB-55C9-4CC6-9665-9F11D3404FE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B4C616FB-55C9-4CC6-9665-9F11D3404FE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B4C616FB-55C9-4CC6-9665-9F11D3404FE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B4C616FB-55C9-4CC6-9665-9F11D3404FE9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BD424A9D-4527-4A32-B51A-7831A20341D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BD424A9D-4527-4A32-B51A-7831A20341D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD424A9D-4527-4A32-B51A-7831A20341D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -72,6 +74,7 @@ Global
 		{5B9045A4-54B0-47E0-B1D7-C0EC1A452388} = {8B46477D-3B28-48B3-A878-6385B95FC324}
 		{F6209F9D-2778-43DD-BFD2-F438AF77D2AD} = {EEC85BE4-9F84-4419-896A-D81B4B21B946}
 		{C59A04C5-0C04-4725-AA58-2A8D7466BB4C} = {B2351465-BB46-4E18-B227-F1D4BE1E509D}
+		{2336E2F1-353B-44A2-847A-3480A13EC6BB} = {D57CF421-1469-413C-AC01-DA26687B7318}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EBEFF8AC-01F5-409B-B24E-BD23A8CC26E6}
