@@ -6,7 +6,6 @@ metadata:
      app: fiap-fase-2
 
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: fiap-fase-2
