@@ -4,7 +4,6 @@ metadata:
   name: fiap-fase-2
   labels: 
      app: fiap-fase-2
-
 spec:
   selector:
     matchLabels:
@@ -16,10 +15,20 @@ spec:
         app: fiap-fase-2
         version: v01
     spec:
+      serviceAccountName: fiap-fase-2-account
+      imagePullSecrets: 
+        - name: docker-auth
+      restartPolicy: Always
       containers:
       - name: fiap-fase-2
         image: DOCKER_IMAGE
         imagePullPolicy: Always
+        resources: 
+          limits:
+            memory: "100Mi"
+          requests:
+            memory: "100Mi"
+            cpu: "1m"
         ports:
         - containerPort: 80
         env: 
