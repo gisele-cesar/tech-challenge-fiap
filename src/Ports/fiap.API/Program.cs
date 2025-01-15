@@ -2,6 +2,7 @@ using fiap.Application;
 using fiap.Domain.Services.Interfaces;
 using fiap.Repositories;
 using fiap.Services;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Serilog;
 using System.Data;
 using System.Data.SqlClient;
@@ -100,6 +101,8 @@ app.UseEndpoints(endpoints =>
                                 break;
                             }
                         }
+
+                        return "ok";
                     });
 
     endpoints.MapControllers();
