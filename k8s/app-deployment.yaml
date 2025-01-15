@@ -23,12 +23,13 @@ spec:
       - name: fiap-fase-2
         image: DOCKER_IMAGE
         imagePullPolicy: Always
-        resources: 
+        resources:
+          limits:
+            memory: "200Mi"
+            cpu: "700m"
           requests:
             memory: "200Mi"
-            cpu: "100m"
-          limits:
-            memory: "300Mi"
+            cpu: "700m"
         ports:
         - containerPort: 80
         readinessProbe:
@@ -55,4 +56,4 @@ spec:
     type: RollingUpdate # estratégia de atualização contínua.
     rollingUpdate:
       maxSurge: 1
-      maxUnavailable: 2
+      maxUnavailable: 1
