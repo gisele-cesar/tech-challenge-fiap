@@ -46,7 +46,7 @@ spec:
           initialDelaySeconds: 60
           periodSeconds: 10
           timeoutSeconds: 10
-          sucessThreshoold: 1
+          successThreshold: 1
           failureThreshold: 2
         env: 
         - name: "ASPNETCORE_ENVIROMENT"
