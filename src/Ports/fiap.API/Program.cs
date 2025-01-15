@@ -6,6 +6,8 @@ using System.Data;
 using System.Reflection;
 using fiap.Domain.Services.Interfaces;
 using Serilog;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -82,8 +84,12 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapHealthChecks("api/health");
     endpoints.MapHealthChecks("api/metrics");
+    endpoints.MapHealthChecks("api/readiness");
+    endpoints.MapHealthChecks("api/liveness");
     endpoints.MapControllers();
 });
 
 Log.Information("Iniciando aplicação");
 app.Run();
+
+

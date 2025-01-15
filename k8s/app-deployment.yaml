@@ -33,16 +33,17 @@ spec:
         - containerPort: 80
         readinessProbe:
           httpGet:
-            path: /actuator/health/readiness
-            port: 8000
-          initialDelaySeconds: 300
-          periodSeconds: 30
+            path: /api/readiness
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
         livenessProbe:
           httpGet:
-            path: /actuator/health/liveness
-            port: 8000
-          initialDelaySeconds: 300
-          periodSeconds: 10
+            path: /api/liveness
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 20
+          timeoutSeconds: 5
         env: 
         - name: "ASPNETCORE_ENVIROMENT"
           value: "Development"
