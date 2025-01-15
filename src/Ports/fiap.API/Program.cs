@@ -87,22 +87,11 @@ app.UseEndpoints(endpoints =>
     endpoints.MapHealthChecks("api/metrics");
     endpoints.MapGet("api/stress", () =>
                     {
-                        Stopwatch stopwatch = new Stopwatch();
-                        stopwatch.Start();
-
                         while (true)
                         {
                             /// Realiza cálculos intensivos para estressar a CPU
                             double result = Math.Pow(Math.PI, Math.E);
-
-                            if (stopwatch.ElapsedMilliseconds > 60000)
-                            {
-                                Console.WriteLine($"saindo do calculo {Dns.GetHostName()}");
-                                break;
-                            }
                         }
-
-                        return "ok";
                     });
 
     endpoints.MapControllers();
