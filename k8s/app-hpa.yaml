@@ -10,11 +10,11 @@ spec:
     kind: Deployment
     name: fiap-fase-2
   minReplicas: 1
-  maxReplicas: 6
+  maxReplicas: 10
   metrics:
     - type: Resource
       resource:
         name: memory
         target:
           type: Utilization
-          averageUtilization: 70
+          averageUtilization: 50
