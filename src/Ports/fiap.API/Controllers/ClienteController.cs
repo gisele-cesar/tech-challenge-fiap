@@ -27,11 +27,6 @@ namespace fiap.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            for (int i = 0; i < 100000; i++)
-            {
-                
-            }
-            Thread.Sleep(6000);
             _logger.Information("Buscando lista de clientes");
             return Ok(await _clienteApplication.Obter());
         }

@@ -1,13 +1,13 @@
 using fiap.Application;
+using fiap.Domain.Services.Interfaces;
 using fiap.Repositories;
 using fiap.Services;
-using System.Data.SqlClient;
-using System.Data;
-using System.Reflection;
-using fiap.Domain.Services.Interfaces;
 using Serilog;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
+using System.Data;
+using System.Data.SqlClient;
+using System.Diagnostics;
+using System.Net;
+using System.Reflection;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -84,8 +84,24 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapHealthChecks("api/health");
     endpoints.MapHealthChecks("api/metrics");
-    endpoints.MapHealthChecks("api/readiness");
-    endpoints.MapHealthChecks("api/liveness");
+    endpoints.MapGet("api/stress", () =>
+                    {
+                        Stopwatch stopwatch = new Stopwatch();
+                        stopwatch.Start();
+
+                        while (true)
+                        {
+                            /// Realiza cálculos intensivos para estressar a CPU
+                            double result = Math.Pow(Math.PI, Math.E);
+
+                            if (stopwatch.ElapsedMilliseconds > 60000)
+                            {
+                                Console.WriteLine($"saindo do calculo {Dns.GetHostName()}");
+                                break;
+                            }
+                        }
+                    });
+
     endpoints.MapControllers();
 });
 
