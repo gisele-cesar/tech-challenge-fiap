@@ -84,9 +84,9 @@ namespace fiap.API.Controllers
         public async Task<IActionResult> Post([FromBody] Cliente cliente)
         {
             if (await _clienteApplication.Inserir(cliente))
-                return Ok(new { Mensagem = "Incluido com sucesso" });
+                return Ok(new { Mensagem = "Cliente incluido com sucesso!" });
 
-            return BadRequest(new { Mensagem = "Erro ao incluir" });
+            return BadRequest(new { Mensagem = "Erro ao incluir cliente!" });
         }
 
         /// <summary>
@@ -114,9 +114,9 @@ namespace fiap.API.Controllers
         public async Task<IActionResult> Put([FromBody] Cliente cliente)
         {
             if (await _clienteApplication.Atualizar(cliente))
-                return Ok(new { Mensagem = "Alterado com sucesso" });
+                return Ok(new { Mensagem = "Cliente alterado com sucesso!" });
 
-            return BadRequest(new { Mensagem = "Erro ao alterar" });
+            return BadRequest(new { Mensagem = "Erro ao alterar cliente!" });
         }
     }
 }

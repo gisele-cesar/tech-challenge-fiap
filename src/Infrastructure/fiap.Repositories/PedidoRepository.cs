@@ -24,7 +24,11 @@ namespace fiap.Repositories
             connection.Open();
             var lst = new List<Pedido>();
             using var command = connection.CreateCommand();
-            command.CommandText = "SELECT p.* , sp.Descricao DescricaoStatusPedido FROM Pedido p join StatusPedido sp on p.IdStatusPedido = sp.IdStatusPedido";
+            command.CommandText = @"
+                                SELECT p.*, sp.Descricao AS DescricaoStatusPedido, pg.Descricao AS DescricaoStatusPagamento 
+                                FROM Pedido p 
+                                JOIN StatusPedido sp ON p.IdStatusPedido = sp.IdStatusPedido
+                                JOIN StatusPagamento pg ON p.IdStatusPagamento = pg.IdStatusPagamento";
             using var reader = command.ExecuteReader();
             while (reader.Read() ) {
                 // Map your data to your entity
@@ -38,6 +42,11 @@ namespace fiap.Repositories
                         IdStatusPedido = (int)reader["IdStatusPedido"],
                         Descricao = reader["DescricaoStatusPedido"].ToString()
                     },
+                    StatusPagamento = new StatusPagamento
+                    {
+                        IdStatusPagamento = (int)reader["IdStatusPagamento"],
+                        Descricao = reader["DescricaoStatusPagamento"].ToString()
+                    },
                     Produtos = await ObterItemPedido((int)reader["IdPedido"])
                 });
             }
@@ -50,7 +59,12 @@ namespace fiap.Repositories
             connection.Open();
             // Execute your query
             using var command = connection.CreateCommand();
-            command.CommandText = "SELECT p.* , sp.Descricao DescricaoStatusPedido FROM Pedido p join StatusPedido sp on p.IdStatusPedido = sp.IdStatusPedido WHERE IdPedido = @id";
+            command.CommandText = @"
+                                SELECT p.*, sp.Descricao AS DescricaoStatusPedido, pg.Descricao AS DescricaoStatusPagamento 
+                                FROM Pedido p 
+                                JOIN StatusPedido sp ON p.IdStatusPedido = sp.IdStatusPedido
+                                JOIN StatusPagamento pg ON p.IdStatusPagamento = pg.IdStatusPagamento
+                                WHERE IdPedido = @id";
             var param = command.CreateParameter();
             param.ParameterName = "@id";
             param.Value = idPedido;
@@ -70,6 +84,12 @@ namespace fiap.Repositories
                         IdStatusPedido = (int)reader["IdStatusPedido"],
                         Descricao = reader["DescricaoStatusPedido"].ToString()
                     },
+                    StatusPagamento = new StatusPagamento
+                    {
+                        IdStatusPagamento = (int)reader["IdStatusPagamento"],
+                        Descricao = reader["DescricaoStatusPagamento"].ToString()
+                    },
+
                     Produtos = await ObterItemPedido(idPedido)
                 };
             }
@@ -123,11 +143,12 @@ namespace fiap.Repositories
                     // Execute your query
                     using var command = connection.CreateCommand();
                     command.Transaction = transaction;
-                    command.CommandText = "insert into Pedido values(@idCliente, @numeroPedido, @idStatusPedido, @valorTotal, getdate(),null); select cast(@@identity as int)";
+                    command.CommandText = "insert into Pedido values(@idCliente, @numeroPedido, @idStatusPedido, @valorTotal, getdate(),null, @idStatusPagamento); select cast(@@identity as int)";
 
                     command.Parameters.Add(new SqlParameter { ParameterName = "@idCliente", Value = pedido.Cliente.Id, SqlDbType = SqlDbType.Int });
                     command.Parameters.Add(new SqlParameter { ParameterName = "@numeroPedido", Value = pedido.Numero, SqlDbType = SqlDbType.VarChar });
                     command.Parameters.Add(new SqlParameter { ParameterName = "@idStatusPedido", Value = pedido.StatusPedido.IdStatusPedido, SqlDbType = SqlDbType.Int });
+                    command.Parameters.Add(new SqlParameter { ParameterName = "@idStatusPagamento", Value = pedido.StatusPagamento.IdStatusPagamento, SqlDbType = SqlDbType.Int });
                     command.Parameters.Add(new SqlParameter { ParameterName = "@valorTotal", Value = pedido.ValorTotal, SqlDbType = SqlDbType.Decimal });
 
                     var idPedido = (int)command.ExecuteScalar();
@@ -170,13 +191,15 @@ namespace fiap.Repositories
                     StringBuilder sb = new StringBuilder();
                     using var command = connection.CreateCommand();
                     command.Transaction = transaction;
-                    sb.Append("update Pedido set IdStatusPedido = @idStatusPedido,");
-                    sb.Append(" ValorTotalPedido = @valorTotalPedido, DataAlteracao = getdate() ");
+                    sb.Append("update Pedido set IdStatusPedido = @idStatusPedido, ");
+                    sb.Append("ValorTotalPedido = @valorTotalPedido, DataAlteracao = getdate(), ");
+                    sb.Append("IdStatusPagamento = @idStatusPagamento ");
                     sb.Append("where IdPedido = @idPedido");
                     command.CommandText = sb.ToString();
 
                     command.Parameters.Add(new SqlParameter { ParameterName = "@idPedido", Value = pedido.IdPedido, SqlDbType = SqlDbType.Int });
                     command.Parameters.Add(new SqlParameter { ParameterName = "@idStatusPedido", Value = pedido.StatusPedido.IdStatusPedido, SqlDbType = SqlDbType.Int });
+                    command.Parameters.Add(new SqlParameter { ParameterName = "@idStatusPagamento", Value = pedido.StatusPagamento.IdStatusPagamento, SqlDbType = SqlDbType.Int });
                     command.Parameters.Add(new SqlParameter { ParameterName = "@valorTotalPedido", Value = pedido.ValorTotal, SqlDbType = SqlDbType.Decimal });
 
                     command.ExecuteNonQuery();

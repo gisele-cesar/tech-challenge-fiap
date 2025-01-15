@@ -60,7 +60,7 @@ namespace fiap.API.Controllers
         ///     }
         /// </remarks>
         /// <param name="pedido"></param>
-        /// <returns>Um novo pedido criado que inicia com o status 'Recebido'</returns>
+        /// <returns>Um novo pedido criado que inicia com o status do pedido 'Solicitado' e o status do pagamento 'Pendente'</returns>
         /// <response code = "200">Retorna o novo pedido criado</response>
         /// <response code = "400">Se o pedido não for criado</response>
         /// <response code = "500">Se houver erro de conexão com banco de dados</response>
@@ -77,25 +77,35 @@ namespace fiap.API.Controllers
                 Cliente = new Cliente { Id = pedido.IdCliente },
                 Numero = pedido.NumeroPedido,
                 Produtos = lstProdutos,
-                StatusPedido = new StatusPedido { IdStatusPedido = 1 }
+                StatusPedido = new StatusPedido { IdStatusPedido = 1 },
+                StatusPagamento = new StatusPagamento { IdStatusPagamento = 1 }
             };
             if (await _pedidoApplication.Inserir(obj))
-                return Ok(new { Mensagem = "Incluido com sucesso" });
+                return Ok(new { Mensagem = "Pedido incluido com sucesso!" });
 
-            return BadRequest(new { Mensagem = "Erro ao incluir" });
+            return BadRequest(new { Mensagem = "Erro ao incluir pedido!" });
         }
 
         /// <summary>
-        /// Atualizar status pedido
+        /// Atualizar pedido
         /// </summary>
         /// <remarks>   
         /// Ids Status Pedido:
         /// 
         ///     [
-        ///         1: Recebido,
-        ///         2: Em preparação,
-        ///         3: Pronto,
-        ///         4: Finalizado
+        ///         1: Solicitado,
+        ///         2: Recebido,
+        ///         3: Em preparação,
+        ///         4: Pronto,
+        ///         5: Finalizado
+        ///     ]
+        ///
+        /// Ids Status Pagamento:
+        /// 
+        ///     [
+        ///         1: Pendente,
+        ///         2: Aprovado,
+        ///         3: Recusado
         ///     ]
         /// 
         /// param listaCodigoProduto:
@@ -110,6 +120,7 @@ namespace fiap.API.Controllers
         ///         "idCliente": 1,
         ///         "numeroPedido": "1234",
         ///         "idStatusPedido": 2,
+        ///         "idStatusPagamento": 2,
         ///         "listaCodigoProduto": [1, 2]
         ///     }
         ///     
@@ -130,13 +141,14 @@ namespace fiap.API.Controllers
             {
                 IdPedido = pedido.IdPedido,
                 StatusPedido = new StatusPedido { IdStatusPedido = pedido.IdStatusPedido },
+                StatusPagamento = new StatusPagamento { IdStatusPagamento = pedido.IdStatusPagamento },
                 Produtos = lstProdutos
             };
 
             if (await _pedidoApplication.Atualizar(obj))
-                return Ok(new { Mensagem = "Alterado com sucesso" });
+                return Ok(new { Mensagem = "Pedido alterado com sucesso!" });
 
-            return BadRequest(new { Mensagem = "Erro ao alterar" });
+            return BadRequest(new { Mensagem = "Erro ao alterar pedido!" });
         }
     }
 }

@@ -9,6 +9,7 @@ namespace fiap.Domain.Entities
         public Cliente Cliente { get; set; }
         public string Numero { get; set; }
         public StatusPedido StatusPedido { get; set; }
+        public StatusPagamento StatusPagamento { get; set; }
         public decimal ValorTotal
         {
             get { return Produtos?.Select(p => p.Preco).Sum() ?? 0; }
