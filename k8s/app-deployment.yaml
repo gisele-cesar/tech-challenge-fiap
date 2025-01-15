@@ -31,22 +31,22 @@ spec:
             memory: "500Mi"
         ports:
         - containerPort: 80
-        readinessProbe:
-          httpGet:
-            path: /api/health
-            port: 80
-          initialDelaySeconds: 60
-          periodSeconds: 10
-          timeoutSeconds: 10
-        livenessProbe:
-          httpGet:
-            path: /api/health
-            port: 80
-          initialDelaySeconds: 60
-          periodSeconds: 10
-          timeoutSeconds: 10
-          successThreshold: 1
-          failureThreshold: 2
+        # readinessProbe:
+        #   httpGet:
+        #     path: /api/health
+        #     port: 80
+        #   initialDelaySeconds: 60
+        #   periodSeconds: 10
+        #   timeoutSeconds: 10
+        # livenessProbe:
+        #   httpGet:
+        #     path: /api/health
+        #     port: 80
+        #   initialDelaySeconds: 60
+        #   periodSeconds: 10
+        #   timeoutSeconds: 10
+        #   successThreshold: 1
+        #   failureThreshold: 2
         env: 
         - name: "ASPNETCORE_ENVIROMENT"
           value: "Development"
