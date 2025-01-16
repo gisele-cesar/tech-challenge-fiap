@@ -1,12 +1,10 @@
 using fiap.Application;
-using fiap.Domain.Services.Interfaces;
 using fiap.Repositories;
 using fiap.Services;
 using Serilog;
 using System.Data;
 using System.Data.SqlClient;
 using System.Reflection;
-using Serilog;
 using fiap.Domain.Interfaces;
 
 
