@@ -1,6 +1,6 @@
 ﻿using fiap.Application.Interfaces;
 using fiap.Domain.Entities;
-using fiap.Domain.Repositories.Interfaces;
+using fiap.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -21,6 +21,10 @@ namespace fiap.Application.UseCases
         public async Task<bool> Inserir(Pedido pedido)
         {
             return await _pedidoRepository.Inserir(pedido);
+        }
+        public async Task<Pedido> InserirPedido(Pedido pedido)
+        {
+            return await _pedidoRepository.InserirPedido(pedido);
         }
         public async Task<Pedido> ObterPedido(int idPedido)
         {

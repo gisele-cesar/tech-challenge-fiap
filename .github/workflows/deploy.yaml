@@ -3,7 +3,7 @@ name: Deploy to ECR
 on:
  
   push:
-    branches: [ feature/fase-2 ]
+    branches: [ develop ]
 
 env:
   ECR_REPOSITORY: fiap-aluno

@@ -1,6 +1,6 @@
 ﻿using fiap.Application.Interfaces;
 using fiap.Domain.Entities;
-using fiap.Domain.Repositories.Interfaces;
+using fiap.Domain.Interfaces;
 using Serilog;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -27,12 +27,10 @@ namespace fiap.Application.UseCases
         }
         public async Task<Cliente> Obter(int id)
         {
-
-            return await _clienteRepository.Obter(id);
+             return await _clienteRepository.Obter(id);
         }
         public async Task<Cliente> ObterPorCpf(string cpf)
         {
-
             return await _clienteRepository.ObterPorCpf(cpf);
         }
         public async Task<bool> Atualizar(Cliente cliente)
