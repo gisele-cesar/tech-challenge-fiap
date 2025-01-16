@@ -36,8 +36,6 @@ namespace fiap.Services
                     category = produto.IdCategoriaProduto.ToString(),
                     title = produto.Nome,
                     description = produto.Descricao,
-                    quantity = 1,
-                    unit_measure = "unit",
                     unit_price = produto.Preco,
                     total_amount = produto.Preco
                 }).ToList(),
