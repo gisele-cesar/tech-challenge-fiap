@@ -19,6 +19,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{2336E2F1-353B-44A2-847A-3480A13EC6BB}"
 	ProjectSection(SolutionItems) = preProject
 		k8s\app-deployment.yaml = k8s\app-deployment.yaml
+		k8s\app-hpa.yaml = k8s\app-hpa.yaml
 		k8s\app-service-account.yaml = k8s\app-service-account.yaml
 		k8s\app-service.yaml = k8s\app-service.yaml
 	EndProjectSection

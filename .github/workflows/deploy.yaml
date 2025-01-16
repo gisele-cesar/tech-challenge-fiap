@@ -57,3 +57,4 @@ jobs:
         kubectl apply -f k8s/app-deployment.yaml
         kubectl apply -f k8s/app-service.yaml
         kubectl apply -f k8s/app-service-account.yaml
+        kubectl apply -f k8s/app-hpa.yaml
