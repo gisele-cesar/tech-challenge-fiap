@@ -57,4 +57,4 @@ spec:
   #         kind: Ingress
   #         name: main-route
   #       current:
-  #         value: 10k
+  #         value: 10
