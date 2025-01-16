@@ -11,6 +11,7 @@ namespace fiap.Application
             services.AddSingleton<IClienteApplication, ClienteApplication>();
             services.AddSingleton<IProdutoApplication, ProdutoApplication>();
             services.AddSingleton<IPedidoApplication, PedidoApplication>();
+            services.AddSingleton<IPagamentoApplication, PagamentoApplication>();
         }
     }
 }

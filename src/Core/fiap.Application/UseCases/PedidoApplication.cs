@@ -22,6 +22,10 @@ namespace fiap.Application.UseCases
         {
             return await _pedidoRepository.Inserir(pedido);
         }
+        public async Task<Pedido> InserirPedido(Pedido pedido)
+        {
+            return await _pedidoRepository.InserirPedido(pedido);
+        }
         public async Task<Pedido> ObterPedido(int idPedido)
         {
 

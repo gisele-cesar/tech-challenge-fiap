@@ -10,9 +10,11 @@ namespace fiap.API.Controllers
     public class PedidoController : ControllerBase
     {
         private readonly IPedidoApplication _pedidoApplication;
-        public PedidoController(IPedidoApplication pedidoApplication)
+        private readonly IPagamentoApplication _pagamentoApplication;
+        public PedidoController(IPedidoApplication pedidoApplication, IPagamentoApplication pagamentoApplication)
         {
             _pedidoApplication = pedidoApplication;
+            _pagamentoApplication = pagamentoApplication;
         }
 
         /// <summary>
@@ -80,9 +82,17 @@ namespace fiap.API.Controllers
                 StatusPedido = new StatusPedido { IdStatusPedido = 1 },
                 StatusPagamento = new StatusPagamento { IdStatusPagamento = 1 }
             };
-            if (await _pedidoApplication.Inserir(obj))
-                return Ok(new { Mensagem = "Pedido incluido com sucesso!" });
 
+            var pedidoInserido = await _pedidoApplication.InserirPedido(obj);
+
+            if (pedidoInserido != null)
+            {
+                if (await _pagamentoApplication.CriarOrdemPagamento(pedidoInserido))
+                {
+                    return Ok(new { Mensagem = "Pedido incluído com sucesso!" });
+                }
+                return BadRequest(new { Mensagem = "Erro ao criar pedido no meio de pagamento" });
+            }
             return BadRequest(new { Mensagem = "Erro ao incluir pedido!" });
         }
 

@@ -39,8 +39,9 @@ builder.Services.AddServicesModule();
 //builder.Services.AddTransient<Func<IDbConnection>>(sp => () =>
 //            new SqlConnection(builder.Configuration.GetConnectionString("fiap.sqlServer")));
 
-builder.Services.AddSingleton<Func<IDbConnection>>( sp => { 
-    var configuration = sp.GetRequiredService<IConfiguration>(); 
+builder.Services.AddSingleton<Func<IDbConnection>>(sp =>
+{
+    var configuration = sp.GetRequiredService<IConfiguration>();
     var connectionString = configuration.GetConnectionString("fiap.sqlServer");
     var secretService = sp.GetRequiredService<ISecretManagerService>();
 
@@ -50,7 +51,7 @@ builder.Services.AddSingleton<Func<IDbConnection>>( sp => {
     {
         Console.WriteLine("Não foi possível recuperar a secret - Console.WriteLine"); ;
         Log.Information("Não foi possível recuperar a secret Serilog");
-        throw new Exception("Não foi possível recuperar a secret - Lançada excecao"); 
+        throw new Exception("Não foi possível recuperar a secret - Lançada excecao");
     }
 
     connectionString = connectionString
@@ -60,7 +61,7 @@ builder.Services.AddSingleton<Func<IDbConnection>>( sp => {
     .Replace("__userdb__", secret.UserName)
     .Replace("__senha__", secret.Password);
 
-    return () => new SqlConnection(connectionString); 
+    return () => new SqlConnection(connectionString);
 });
 
 

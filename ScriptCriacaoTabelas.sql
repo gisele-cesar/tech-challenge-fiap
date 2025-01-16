@@ -86,7 +86,7 @@ CREATE TABLE Produto (
         DataAlteracao DATETIME NULL,
         IdStatusPagamento INT NOT NULL,
         CONSTRAINT FK_Cliente FOREIGN KEY (IdCliente) REFERENCES Cliente(IdCliente),
-        CONSTRAINT FK_StatusPedido FOREIGN KEY (IdStatusPedido) REFERENCES StatusPedido(IdStatusPedido)
+        CONSTRAINT FK_StatusPedido FOREIGN KEY (IdStatusPedido) REFERENCES StatusPedido(IdStatusPedido),
         CONSTRAINT FK_StatusPagamento FOREIGN KEY (IdStatusPagamento) REFERENCES StatusPagamento(IdStatusPagamento)
     );
 

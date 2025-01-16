@@ -37,8 +37,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Core\fiap.Application\fiap.Application.csproj" />
     <ProjectReference Include="..\..\Core\fiap.Domain\fiap.Domain.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\fiap.Repositories\fiap.Repositories.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\fiap.Services\fiap.Services.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Data\fiap.Repositories\fiap.Repositories.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Services\fiap.Services\fiap.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>

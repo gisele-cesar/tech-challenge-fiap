@@ -132,6 +132,53 @@ namespace fiap.Repositories
             return Task.FromResult(lst);
         }
 
+        public Task<Pedido> InserirPedido(Pedido pedido)
+        {
+            using var connection = _connectionFactory();
+            connection.Open();
+            using (var transaction = connection.BeginTransaction())
+            {
+                try
+                {
+                    // Execute your query
+                    using var command = connection.CreateCommand();
+                    command.Transaction = transaction;
+                    command.CommandText = "insert into Pedido values(@idCliente, @numeroPedido, @idStatusPedido, @valorTotal, getdate(),null, @idStatusPagamento); select cast(@@identity as int)";
+
+                    command.Parameters.Add(new SqlParameter { ParameterName = "@idCliente", Value = pedido.Cliente.Id, SqlDbType = SqlDbType.Int });
+                    command.Parameters.Add(new SqlParameter { ParameterName = "@numeroPedido", Value = pedido.Numero, SqlDbType = SqlDbType.VarChar });
+                    command.Parameters.Add(new SqlParameter { ParameterName = "@idStatusPedido", Value = pedido.StatusPedido.IdStatusPedido, SqlDbType = SqlDbType.Int });
+                    command.Parameters.Add(new SqlParameter { ParameterName = "@idStatusPagamento", Value = pedido.StatusPagamento.IdStatusPagamento, SqlDbType = SqlDbType.Int });
+                    command.Parameters.Add(new SqlParameter { ParameterName = "@valorTotal", Value = pedido.ValorTotal, SqlDbType = SqlDbType.Decimal });
+
+                    var idPedido = (int)command.ExecuteScalar();
+                    pedido.IdPedido = idPedido;
+
+                    foreach (var item in pedido.Produtos)
+                    {
+                        using var command2 = connection.CreateCommand();
+                        command2.Transaction = transaction;
+                        command2.CommandText = "insert into ItemPedido values(@idPedido, @idProduto)";
+
+                        command2.Parameters.Add(new SqlParameter { ParameterName = "@idPedido", Value = idPedido, SqlDbType = SqlDbType.Int });
+                        command2.Parameters.Add(new SqlParameter { ParameterName = "@idProduto", Value = item.IdProduto, SqlDbType = SqlDbType.Int });
+
+                        command2.ExecuteNonQuery();
+
+                    }
+                    transaction.Commit();
+
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    Console.WriteLine($"Erro: {ex.Message}");
+                    return null;
+                }
+            }
+            return Task.FromResult(pedido);
+        }
+
         public Task<bool> Inserir(Pedido pedido)
         {
             using var connection = _connectionFactory();
