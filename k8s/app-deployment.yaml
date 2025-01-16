@@ -25,27 +25,27 @@ spec:
         imagePullPolicy: Always
         resources:
           requests:
-            memory: "40Mi"
+            memory: "50Mi"
             cpu: "100m"
           limits:
-            memory: "70Mi"
+            memory: "100Mi"
             cpu: "200m"
         ports:
         - containerPort: 80
         env: 
         - name: "ASPNETCORE_ENVIROMENT"
           value: "Development"
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: fiap-fase-2-pod
-spec:
-  containers:
-  - name: fiap-fase-2
-    image: DOCKER_IMAGE
-    resources:
-      requests:
-        memory: "50Mi"
-      limits:
-        memory: "100Mi"
+# ---
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: fiap-fase-2-pod
+# spec:
+#   containers:
+#   - name: fiap-fase-2
+#     image: DOCKER_IMAGE
+#     resources:
+#       requests:
+#         memory: "50Mi"
+#       limits:
+#         memory: "100Mi"
