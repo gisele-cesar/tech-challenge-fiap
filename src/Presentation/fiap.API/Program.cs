@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Reflection;
 using fiap.Domain.Interfaces;
+using fiap.Domain.Entities;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,17 +38,13 @@ builder.Services.AddHttpClient();
 builder.Services.AddApplicationModule();
 builder.Services.AddServicesModule();
 
-
-//builder.Services.AddTransient<Func<IDbConnection>>(sp => () =>
-//            new SqlConnection(builder.Configuration.GetConnectionString("fiap.sqlServer")));
-
 builder.Services.AddSingleton<Func<IDbConnection>>(sp =>
 {
     var configuration = sp.GetRequiredService<IConfiguration>();
     var connectionString = configuration.GetConnectionString("fiap.sqlServer");
     var secretService = sp.GetRequiredService<ISecretManagerService>();
 
-    var secret = secretService.ObterSecret("dev/fiap/sql-rds").Result;
+    var secret = secretService.ObterSecret<SecretDbConnect>("dev/fiap/sql-rds").Result;
 
     if (secret.Host is null)
     {

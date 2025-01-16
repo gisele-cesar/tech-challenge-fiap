@@ -1,5 +1,6 @@
 ﻿using fiap.Domain.Entities;
 using fiap.Domain.Interfaces;
+using Serilog;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
@@ -8,17 +9,21 @@ namespace fiap.Services
 {
     public class PagamentoExternoService : IPagamentoExternoService
     {
-        private const string AccessToken = "TEST-1903899460856100-011422-80dbc9156f2468ca681050b467907060-670480565";
-        private const string UserId = "670480565";
-        private const string ExternalPosId = "SUC002POS001";
         private readonly IHttpClientFactory _httpClient;
+        private readonly ISecretManagerService _secretManagerService;
+        private readonly ILogger _logger;
 
-        public PagamentoExternoService(IHttpClientFactory httpClient)
+        public PagamentoExternoService(IHttpClientFactory httpClient, ISecretManagerService secretManagerService, ILogger logger)
         {
             _httpClient = httpClient;
+            _secretManagerService = secretManagerService;
+            _logger = logger;
         }
         public async Task<bool> CriarOrdemPagamentoExterno(Pedido pedido)
         {
+            _logger.Information("Recuperando as valores das secrets dev/fiap/mercado-pago");
+            var secretMercadoPago = await _secretManagerService.ObterSecret<SecretMercadoPago>("dev/fiap/mercado-pago");
+
             var pagamentoExterno = new OrdemPagamentoExterno
             {
                 external_reference = pedido.IdPedido.ToString(),
@@ -44,10 +49,10 @@ namespace fiap.Services
             var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
             var client = _httpClient.CreateClient("MercadoPago");
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", AccessToken);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", secretMercadoPago.AccessToken);
 
 
-            var response = await client.PutAsync($"https://api.mercadopago.com/instore/orders/qr/seller/collectors/{UserId}/pos/{ExternalPosId}/qrs", content);
+            var response = await client.PutAsync($"https://api.mercadopago.com/instore/orders/qr/seller/collectors/{secretMercadoPago.UserId}/pos/{secretMercadoPago.ExternalPosId}/qrs", content);
 
             if (response.IsSuccessStatusCode)
             {
@@ -61,8 +66,12 @@ namespace fiap.Services
 
         public async Task<object> ConsultarOrdemPagamentoExterno(string idOrdemComercial)
         {
+            _logger.Information("Recuperando as valores das secrets dev/fiap/mercado-pago");
+
+            var secretMercadoPago = await _secretManagerService.ObterSecret<SecretMercadoPago>("dev/fiap/mercado-pago");
+
             var client = _httpClient.CreateClient("MercadoPago");
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", AccessToken);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", secretMercadoPago.AccessToken);
             var response = await client.GetAsync($"https://api.mercadopago.com/merchant_orders/{idOrdemComercial}");
 
             if (response.IsSuccessStatusCode)
