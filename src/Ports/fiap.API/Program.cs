@@ -82,15 +82,6 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapHealthChecks("api/health");
     endpoints.MapHealthChecks("api/metrics");
-    ////endpoints.MapGet("api/stress", () =>
-    ////                {
-    ////                    while (true)
-    ////                    {
-    ////                        /// Realiza cálculos intensivos para estressar a CPU
-    ////                        double result = Math.Pow(Math.PI, Math.E);
-    ////                    }
-    ////                });
-
     endpoints.MapControllers();
 });
 
