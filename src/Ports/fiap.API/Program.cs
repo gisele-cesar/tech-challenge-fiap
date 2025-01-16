@@ -1,11 +1,11 @@
 using fiap.Application;
+using fiap.Domain.Services.Interfaces;
 using fiap.Repositories;
 using fiap.Services;
-using System.Data.SqlClient;
-using System.Data;
-using System.Reflection;
-using fiap.Domain.Services.Interfaces;
 using Serilog;
+using System.Data;
+using System.Data.SqlClient;
+using System.Reflection;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -87,3 +87,5 @@ app.UseEndpoints(endpoints =>
 
 Log.Information("Iniciando aplicação");
 app.Run();
+
+
