@@ -12,10 +12,10 @@ EXPOSE 1433
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /
-COPY ["/src/Ports/fiap.API/fiap.API.csproj", "src/Ports/fiap.API/"]
-RUN dotnet restore "./src/Ports/fiap.API/fiap.API.csproj"
+COPY ["/src/Presentation/fiap.API/fiap.API.csproj", "src/Presentation/fiap.API/"]
+RUN dotnet restore "./src/Presentation/fiap.API/fiap.API.csproj"
 COPY . .
-WORKDIR "src/Ports/fiap.API"
+WORKDIR "src/Presentation/fiap.API"
 RUN dotnet build "./fiap.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
