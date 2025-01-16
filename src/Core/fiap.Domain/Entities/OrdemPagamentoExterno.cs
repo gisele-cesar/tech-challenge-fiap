@@ -10,7 +10,7 @@ namespace fiap.Domain.Entities
     {
         public string external_reference { get; set; }
         public string notification_url { get; set; }
-        public DateTime expiration_date { get; set; }
+        public string expiration_date { get; set; }
         public decimal total_amount { get; set; }
         public List<Item> items { get; set; }
         public string title { get; set; }

@@ -10,6 +10,6 @@ namespace fiap.Domain.Interfaces
     public interface IPagamentoExternoService
     {
         Task<bool> CriarOrdemPagamentoExterno(Pedido pedido);
-        Task<object> ConsultarOrdemPagamentoExterno(int idOrdemComercial);
+        Task<object> ConsultarOrdemPagamentoExterno(string idOrdemComercial);
     }
 }

@@ -9,7 +9,7 @@ namespace fiap.Application.Interfaces
 {
     public interface IPagamentoApplication
     {
-        Task<bool> CriarOrdemPagamento(Pedido pedido);
-        Task<object> ConsultarOrdemPagamento(int idOrdemComercial);
+        Task<bool> CriarOrdemPagamento(int idPedido);
+        Task<object> ConsultarOrdemPagamento(string idOrdemComercial);
     }
 }

@@ -16,16 +16,14 @@ namespace fiap.API.Webhooks
             _pedidoApplication = pedidoApplication;
         }
 
-        [HttpPost("ordem-criada")]
-        public async Task<IActionResult> OrdemCriada([FromQuery] int id, [FromQuery] string topic, [FromBody] dynamic content)
+        [HttpPost("ordemCriada")]
+        public async Task<IActionResult> OrdemCriada([FromQuery] string id, [FromQuery] string topic, [FromBody] dynamic content)
         {
-            var ordemComercial = await _pagamentoApplication.ConsultarOrdemPagamento(id);
-
-            return Ok();
+            return Ok(await _pagamentoApplication.ConsultarOrdemPagamento(id));
         }
 
 
-        [HttpPost("pagamento-processado")]
+        [HttpPost("pagamentoProcessado")]
         public async Task<IActionResult> PagamentoProcessado([FromQuery] int data_id, [FromQuery] string topic, [FromBody] dynamic content)
         {
             var pedido = await _pedidoApplication.ObterPedido(data_id);

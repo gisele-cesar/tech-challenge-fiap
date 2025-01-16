@@ -33,8 +33,10 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddHealthChecks();
 
 // Adiciona injeção de dependência no Application
+builder.Services.AddHttpClient();
 builder.Services.AddApplicationModule();
 builder.Services.AddServicesModule();
+
 
 //builder.Services.AddTransient<Func<IDbConnection>>(sp => () =>
 //            new SqlConnection(builder.Configuration.GetConnectionString("fiap.sqlServer")));

@@ -87,9 +87,11 @@ namespace fiap.API.Controllers
 
             if (pedidoInserido != null)
             {
-                if (await _pagamentoApplication.CriarOrdemPagamento(pedidoInserido))
+                if (await _pagamentoApplication.CriarOrdemPagamento(pedidoInserido.IdPedido))
                 {
-                    return Ok(new { Mensagem = "Pedido incluído com sucesso!" });
+                    //return Ok(new { Mensagem = $"Pedido incluído com sucesso! Id Pedido: {pedidoInserido.IdPedido}" }); // OUUUU
+                    return Ok(new { Mensagem = $"Pedido incluído com sucesso!", pedidoInserido.IdPedido }); // OOOUUU
+                    //return Ok(new { Mensagem = $"Pedido incluído com sucesso!", Pedido = pedidoInserido });
                 }
                 return BadRequest(new { Mensagem = "Erro ao criar pedido no meio de pagamento" });
             }
