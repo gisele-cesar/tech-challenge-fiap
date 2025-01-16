@@ -2,12 +2,9 @@ using fiap.Application;
 using fiap.Domain.Services.Interfaces;
 using fiap.Repositories;
 using fiap.Services;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Serilog;
 using System.Data;
 using System.Data.SqlClient;
-using System.Diagnostics;
-using System.Net;
 using System.Reflection;
 
 
@@ -85,14 +82,14 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapHealthChecks("api/health");
     endpoints.MapHealthChecks("api/metrics");
-    endpoints.MapGet("api/stress", () =>
-                    {
-                        while (true)
-                        {
-                            /// Realiza cálculos intensivos para estressar a CPU
-                            double result = Math.Pow(Math.PI, Math.E);
-                        }
-                    });
+    ////endpoints.MapGet("api/stress", () =>
+    ////                {
+    ////                    while (true)
+    ////                    {
+    ////                        /// Realiza cálculos intensivos para estressar a CPU
+    ////                        double result = Math.Pow(Math.PI, Math.E);
+    ////                    }
+    ////                });
 
     endpoints.MapControllers();
 });
