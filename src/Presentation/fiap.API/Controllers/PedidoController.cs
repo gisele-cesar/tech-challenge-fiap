@@ -30,6 +30,12 @@ namespace fiap.API.Controllers
             return Ok(await _pedidoApplication.ObterPedidos());
         }
 
+        [HttpGet("ObterPedidosPorStatus")]
+        public async Task<IActionResult> Get([FromQuery] string status1, string status2, string status3)
+        {
+            return Ok(await _pedidoApplication.ObterPedidosPorStatus(status1, status2, status3));
+        }
+
         /// <summary>
         /// Buscar pedido por id
         /// </summary>

@@ -17,6 +17,10 @@ namespace fiap.Application.UseCases
         public async Task<List<Pedido>> ObterPedidos()
         {
             return await _pedidoRepository.ObterPedidos();
+        } 
+        public async Task<List<Pedido>> ObterPedidosPorStatus(string status1, string status2, string status3)
+        {
+            return await _pedidoRepository.ObterPedidosPorStatus(status1, status2, status3);
         }
         public async Task<bool> Inserir(Pedido pedido)
         {

@@ -12,7 +12,7 @@ namespace fiap.Repositories
         private readonly Func<IDbConnection> _connectionFactory;
         private readonly IClienteRepository _clienteRepository;
 
-        public PedidoRepository(Func<IDbConnection> connectionFactory, IClienteRepository clienteRepository )
+        public PedidoRepository(Func<IDbConnection> connectionFactory, IClienteRepository clienteRepository)
         {
             _connectionFactory = connectionFactory;
             _clienteRepository = clienteRepository;
@@ -30,7 +30,8 @@ namespace fiap.Repositories
                                 JOIN StatusPedido sp ON p.IdStatusPedido = sp.IdStatusPedido
                                 JOIN StatusPagamento pg ON p.IdStatusPagamento = pg.IdStatusPagamento";
             using var reader = command.ExecuteReader();
-            while (reader.Read() ) {
+            while (reader.Read())
+            {
                 // Map your data to your entity
                 lst.Add(new Pedido
                 {
@@ -51,6 +52,62 @@ namespace fiap.Repositories
                 });
             }
             return await Task.FromResult(lst);
+        }
+
+        public async Task<List<Pedido>> ObterPedidosPorStatus(string status1, string status2, string status3)
+        {
+            using var connection = _connectionFactory();
+            connection.Open();
+            var lst = new List<Pedido>();
+            try
+            {
+                using var command = connection.CreateCommand();
+                command.CommandText = $@"
+                                  SELECT p.*, sp.Descricao AS DescricaoStatusPedido, pg.Descricao AS DescricaoStatusPagamento 
+                                    FROM Pedido p 
+                                    JOIN StatusPedido sp ON p.IdStatusPedido = sp.IdStatusPedido
+                                    JOIN StatusPagamento pg ON p.IdStatusPagamento = pg.IdStatusPagamento
+                                    WHERE sp.Descricao NOT IN ('Solicitado', 'Finalizado')
+                                    ORDER BY 
+                                        CASE 
+                                            WHEN sp.Descricao = '{status1}' THEN 1
+                                            WHEN sp.Descricao = '{status2}' THEN 2
+                                            WHEN sp.Descricao = '{status3}' THEN 3
+                                            ELSE 4
+                                        END,
+                                        p.DataCriacao ASC";
+
+                using var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    // Map your data to your entity
+                    lst.Add(new Pedido
+                    {
+                        IdPedido = (int)reader["IdPedido"],
+                        Cliente = await _clienteRepository.Obter((int)reader["IdCliente"]),
+                        Numero = reader["NumeroPedido"].ToString(),
+                        StatusPedido = new StatusPedido
+                        {
+                            IdStatusPedido = (int)reader["IdStatusPedido"],
+                            Descricao = reader["DescricaoStatusPedido"].ToString()
+                        },
+                        StatusPagamento = new StatusPagamento
+                        {
+                            IdStatusPagamento = (int)reader["IdStatusPagamento"],
+                            Descricao = reader["DescricaoStatusPagamento"].ToString()
+                        },
+                        Produtos = await ObterItemPedido((int)reader["IdPedido"])
+                    });
+                }
+                return await Task.FromResult(lst);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro: {ex.Message}");
+                return null;
+            }
+
         }
 
         public async Task<Pedido> ObterPedido(int idPedido)
@@ -214,7 +271,7 @@ namespace fiap.Repositories
                     }
                     transaction.Commit();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     transaction.Rollback();
                     Console.WriteLine($"Erro: {ex.Message}");
