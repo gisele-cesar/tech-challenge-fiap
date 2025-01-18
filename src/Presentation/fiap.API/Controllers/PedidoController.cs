@@ -2,6 +2,7 @@
 using fiap.Application.Interfaces;
 using fiap.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace fiap.API.Controllers
 {
@@ -30,8 +31,39 @@ namespace fiap.API.Controllers
             return Ok(await _pedidoApplication.ObterPedidos());
         }
 
+        /// <summary>
+        /// Obter Lista de Pedidos Por Status
+        /// </summary>
+        /// <remarks>   
+        /// Descricao Status Pedido para ordenacao:
+        /// 
+        ///     [
+        ///         - Recebido,
+        ///         - Em preparação,
+        ///         - Pronto
+        ///     ]
+        /// 
+        /// Exemplo:
+        /// 
+        ///     Get /Pedido
+        ///     {
+        ///         "status1": "Pronto",
+        ///         "status2": "Em preparação",
+        ///         "status3": "Recebido"
+        ///     }
+        ///     
+        /// </remarks>
+        /// <param name="status1"></param>
+        /// <param name="status2"></param>
+        /// <param name="status3"></param>
+        /// <returns>Retorna lista de Pedidos ordenados por status do pedido conforme parâmetros da consulta</returns>
+        /// <response code = "200">Retorna a lista de pedidos ordenados por status do pedido conforme parâmetros da consulta</response>
+        /// <response code = "400">Se houver erro na busca por pedidos</response>
+        /// <response code = "500">Se houver erro de conexão com banco de dados</response>
         [HttpGet("ObterPedidosPorStatus")]
-        public async Task<IActionResult> Get([FromQuery] string status1, string status2, string status3)
+        public async Task<IActionResult> Get([FromQuery, Required] string status1,
+                                             [FromQuery, Required] string status2,
+                                             [FromQuery, Required] string status3)
         {
             return Ok(await _pedidoApplication.ObterPedidosPorStatus(status1, status2, status3));
         }
