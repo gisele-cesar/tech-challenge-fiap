@@ -17,6 +17,12 @@ A lanchonete enfrenta dificuldades no atendimento devido à falta de um sistema 
 
  ## Arquitetura
 
+ A arquitetura do projeto segue o padrão de camadas, separando responsabilidades em diferentes projetos:
+   - Presentation: Contém os controladores da API.
+   - Application: Contém as interfaces e implementações das regras de negócio.
+   - Domain: Contém as entidades e interfaces de repositório.
+   - Infrastructure: Contém a implementação dos repositórios e a configuração do banco de dados.
+
  ### Requisitos do negócio
 
  - Gerenciamento de Pedidos: Interface de autoatendimento para clientes.
@@ -54,16 +60,10 @@ A lanchonete enfrenta dificuldades no atendimento devido à falta de um sistema 
    cd tech-challenge-fiap
 ```
 
-2. Compilar o Projeto:
-
-```bash
-   dotnet build
-```
-3. Executar o Projeto:
-
-```bash
-   dotnet run --project src/Presentation/fiap.API
-```
+2. Executar o Projeto:
+ -  Abra o projeto no Visual Studio.
+ -  Selecione o projeto fiap.API como projeto de inicialização.
+ -  Pressione F5 para iniciar a aplicação.
 
 4.	Acessar a API:
    
@@ -71,14 +71,54 @@ A lanchonete enfrenta dificuldades no atendimento devido à falta de um sistema 
 
 ## Implantação da nuvem (AWS EKS)
 
-1. Criar Cluster EKS: Siga a documentação da AWS para criar um cluster EKS: ()
+### Pré-requisitos:
+
+ - Conta AWS
+ - AWS CLI configurado
+ - kubectl configurado
+ - EKS Cluster configurado
+
+ ***Obs.: É possível obter as configurações acima através do link: https://dlmade.medium.com/ci-cd-with-github-action-and-aws-eks-5fd9714010cd
+
+1. Criação e configuração do EKS Cluster: 
+
+ - Crie um cluster EKS utilizando o console AWS ou AWS CLI.
+ - Configure o kubectl para se conectar ao cluster EKS.
+
+ ***Obs.: Siga a documentação da AWS para criar um cluster EKS: [Documentação AWS EKS](https://docs.aws.amazon.com/pt_br/eks/latest/userguide/getting-started.html)
+
+2. Deploy da aplicação
+
+ - Construir imagem Docker da aplicação:
+```bash
+
+```
+
+ - Enviar Imagem Docker:
+```bash
+
+```
+
+ - Aplicar Manifests Kubernets:
+```bash
+   kubectl apply -f k8s/
+```
+
+ - Configurar HPA:
+```bash
+   kubectl apply -f k8s/app-hpa.yaml
+```
+
+4. Acessar a API: Use o IP externo do serviço LoadBalancer para acessar a API.
+
 
 ## Como testar as API's do Projeto
 
 ### Pré-requisitos
 
 - Instância banco de dados AWS RDS 'db-rds-fiap' disponível
-- Acessar o swagger em https://localhost:44322/swagger/index.html 
+- Acessar o swagger em https://localhost:44322/swagger/index.html (para rodar localmente)
+- Acessar o swagger em --- (para rodar na AWS)
 
 ### Ordem de execução das APIs
 
@@ -95,7 +135,7 @@ A lanchonete enfrenta dificuldades no atendimento devido à falta de um sistema 
 
 ## Collection do Postman
 
-![collection](docs/9SOAT%20-%20Tech%20Challenge%20-%20Fase%202.postman_collection.json)
+Acesse clicando: [collection](docs/9SOAT%20-%20Tech%20Challenge%20-%20Fase%202.postman_collection.json)
 
 ## Estrutura do Repositório
 
