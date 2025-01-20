@@ -36,13 +36,7 @@ A lanchonete enfrenta dificuldades no atendimento devido à falta de um sistema 
 
  ### Desenho de arquitetura da solução proposta
 
-![teste](docs/Desenho Arquitetura.jpg)
-
-![Desenho Arquitetura](tech-challenge-fiap-2/tech-challenge-fiap/docs/Desenho Arquitetura.jpg)
-
-
- (Desenho Arquitetura)[tech-challenge-fiap-2/tech-challenge-fiap/docs/Desenho Arquitetura.jpg]
-
+ ![Desenho Arquitetura](docs/Desenho%20Arquitetura.jpg)
 
 ## Como Iniciar o Projeto Localmente
 
@@ -101,9 +95,8 @@ A lanchonete enfrenta dificuldades no atendimento devido à falta de um sistema 
 
 ## Collection do Postman
 
-![collection](docs/9SOAT -  Tech Challenge - Fase 2.postman_collection)
+![collection](docs/9SOAT%20-%20Tech%20Challenge%20-%20Fase%202.postman_collection.json)
 
-(collection)[docs/9SOAT -  Tech Challenge - Fase 2.postman_collection]
 
 ## Estrutura do Repositório
 
