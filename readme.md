@@ -98,6 +98,8 @@ A lanchonete enfrenta dificuldades no atendimento devido à falta de um sistema 
 ![collection](docs/9SOAT%20-%20Tech%20Challenge%20-%20Fase%202.postman_collection.json)
 
 
+[An Internal Link to a Section Heading](docs/9SOAT -  Tech Challenge - Fase 2.postman_collection.json)
+
 ## Estrutura do Repositório
 
  - src/: Código-fonte do projeto
