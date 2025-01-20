@@ -74,11 +74,13 @@ A lanchonete enfrenta dificuldades no atendimento devido à falta de um sistema 
 ### Pré-requisitos:
 
  - Conta AWS
+ - Criação de um container ECR (Amazon Elastic Container Registry) para publicação da imagem
  - AWS CLI configurado
  - kubectl configurado
  - EKS Cluster configurado
 
  ***Obs.: É possível obter as configurações acima através do link: https://dlmade.medium.com/ci-cd-with-github-action-and-aws-eks-5fd9714010cd
+
 
 1. Criação e configuração do EKS Cluster: 
 
@@ -87,11 +89,22 @@ A lanchonete enfrenta dificuldades no atendimento devido à falta de um sistema 
 
  ***Obs.: Siga a documentação da AWS para criar um cluster EKS: [Documentação AWS EKS](https://docs.aws.amazon.com/pt_br/eks/latest/userguide/getting-started.html)
 
+ - Após realizar a configuração, rodar o comando abaixo para criação do EKS:
+ ```bash
+   eksctl create cluster --name eks-fiap --region us-east-1 --node-type t3.micro
+```
+ - Aguarde a finalização da criação da stack "eksctl-eks-fiap-cluster"
+
+2. Deploy da aplicação
+
+ - Acessar o Github e realizar o Pull Request para a branch [develop] para criação da action e deploy da aplicação na AWS
+
+<!-- 
 2. Deploy da aplicação
 
  - Construir imagem Docker da aplicação:
 ```bash
-
+   eksctl create cluster --name eks-fiap --region us-east-1 --node-type t3.micro
 ```
 
  - Enviar Imagem Docker:
@@ -107,7 +120,7 @@ A lanchonete enfrenta dificuldades no atendimento devido à falta de um sistema 
  - Configurar HPA:
 ```bash
    kubectl apply -f k8s/app-hpa.yaml
-```
+``` -->
 
 4. Acessar a API: Use o IP externo do serviço LoadBalancer para acessar a API.
 
