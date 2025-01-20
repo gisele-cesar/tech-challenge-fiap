@@ -325,11 +325,10 @@ namespace fiap.Repositories
                         command2.Parameters.Add(new SqlParameter { ParameterName = "@idPedido", Value = pedido.IdPedido, SqlDbType = SqlDbType.Int });
                         command2.Parameters.Add(new SqlParameter { ParameterName = "@idProduto", Value = item.IdProduto, SqlDbType = SqlDbType.Int });
 
-                        command.ExecuteNonQuery() >= 1;
+                        command.ExecuteNonQuery();
                     }
                     transaction.Commit();
                     _logger.Information($"Pedido id: {pedido.IdPedido} atualizado com sucesso!");
-                    //return Task.FromResult(true);
                     return Task.FromResult(command.ExecuteNonQuery() >= 1);
                 }
                 catch (Exception ex)
