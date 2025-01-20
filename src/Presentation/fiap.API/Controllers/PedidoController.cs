@@ -10,10 +10,12 @@ namespace fiap.API.Controllers
     [ApiController]
     public class PedidoController : ControllerBase
     {
+        private readonly Serilog.ILogger _logger;
         private readonly IPedidoApplication _pedidoApplication;
         private readonly IPagamentoApplication _pagamentoApplication;
-        public PedidoController(IPedidoApplication pedidoApplication, IPagamentoApplication pagamentoApplication)
+        public PedidoController(Serilog.ILogger logger, IPedidoApplication pedidoApplication, IPagamentoApplication pagamentoApplication)
         {
+            _logger = logger;
             _pedidoApplication = pedidoApplication;
             _pagamentoApplication = pagamentoApplication;
         }
@@ -28,7 +30,15 @@ namespace fiap.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _pedidoApplication.ObterPedidos());
+            try
+            {
+                _logger.Information("Buscando lista de pedidos.");
+                return Ok(await _pedidoApplication.ObterPedidos());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao obter pedidos. Erro: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -65,7 +75,16 @@ namespace fiap.API.Controllers
                                              [FromQuery, Required] string status2,
                                              [FromQuery, Required] string status3)
         {
-            return Ok(await _pedidoApplication.ObterPedidosPorStatus(status1, status2, status3));
+            try
+            {
+                _logger.Information($"Buscando lista de pedidos por status na ordem: {status1}, {status2} e {status3}");
+                return Ok(await _pedidoApplication.ObterPedidosPorStatus(status1, status2, status3));
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao obter pedidos por status. Erro: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -79,7 +98,15 @@ namespace fiap.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            return Ok(await _pedidoApplication.ObterPedido(id));
+            try
+            {
+                _logger.Information($"Buscando pedido por id: {id}.");
+                return Ok(await _pedidoApplication.ObterPedido(id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao obter pedido por id: {id}. Erro: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -107,33 +134,40 @@ namespace fiap.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] PedidoDTO pedido)
         {
-            var lstProdutos = new List<Produto>();
-
-            foreach (var item in pedido.ListaCodigoProduto)
-                lstProdutos.Add(new Produto { IdProduto = item });
-
-            var obj = new Pedido
+            try
             {
-                Cliente = new Cliente { Id = pedido.IdCliente },
-                Numero = pedido.NumeroPedido,
-                Produtos = lstProdutos,
-                StatusPedido = new StatusPedido { IdStatusPedido = 1 },
-                StatusPagamento = new StatusPagamento { IdStatusPagamento = 1 }
-            };
+                var lstProdutos = new List<Produto>();
 
-            var pedidoInserido = await _pedidoApplication.InserirPedido(obj);
+                foreach (var item in pedido.ListaCodigoProduto)
+                    lstProdutos.Add(new Produto { IdProduto = item });
 
-            if (pedidoInserido != null)
-            {
-                if (await _pagamentoApplication.CriarOrdemPagamento(pedidoInserido.IdPedido))
+                var obj = new Pedido
                 {
-                    //return Ok(new { Mensagem = $"Pedido incluído com sucesso! Id Pedido: {pedidoInserido.IdPedido}" }); // OUUUU
-                    return Ok(new { Mensagem = $"Pedido incluído com sucesso!", pedidoInserido.IdPedido }); // OOOUUU
-                    //return Ok(new { Mensagem = $"Pedido incluído com sucesso!", Pedido = pedidoInserido });
+                    Cliente = new Cliente { Id = pedido.IdCliente },
+                    Numero = pedido.NumeroPedido,
+                    Produtos = lstProdutos,
+                    StatusPedido = new StatusPedido { IdStatusPedido = 1 },
+                    StatusPagamento = new StatusPagamento { IdStatusPagamento = 1 }
+                };
+
+                _logger.Information($"Inserindo novo pedido numero: {pedido.NumeroPedido}");
+                var pedidoInserido = await _pedidoApplication.Inserir(obj);
+
+                if (pedidoInserido != null)
+                {
+                    if (await _pagamentoApplication.CriarOrdemPagamento(pedidoInserido.IdPedido))
+                    {
+                        _logger.Information($"Iniciando criacao ordem de pagamento no MP do pedido id: {pedidoInserido.IdPedido}.");
+                        return Ok(new { Mensagem = $"Pedido incluído com sucesso!", pedidoInserido.IdPedido });
+                    }
+                    return BadRequest(new { Mensagem = "Erro ao criar pedido no meio de pagamento" });
                 }
-                return BadRequest(new { Mensagem = "Erro ao criar pedido no meio de pagamento" });
+                return BadRequest(new { Mensagem = "Erro ao incluir pedido!" });
             }
-            return BadRequest(new { Mensagem = "Erro ao incluir pedido!" });
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao incluir pedido {pedido.NumeroPedido}. Erro: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -183,22 +217,32 @@ namespace fiap.API.Controllers
         [HttpPut()]
         public async Task<IActionResult> Put([FromBody] PedidoDTO pedido)
         {
-            var lstProdutos = new List<Produto>();
-
-            foreach (var item in pedido.ListaCodigoProduto)
-                lstProdutos.Add(new Produto { IdProduto = item });
-            var obj = new Pedido
+            try
             {
-                IdPedido = pedido.IdPedido,
-                StatusPedido = new StatusPedido { IdStatusPedido = pedido.IdStatusPedido },
-                StatusPagamento = new StatusPagamento { IdStatusPagamento = pedido.IdStatusPagamento },
-                Produtos = lstProdutos
-            };
+                var lstProdutos = new List<Produto>();
 
-            if (await _pedidoApplication.Atualizar(obj))
-                return Ok(new { Mensagem = "Pedido alterado com sucesso!" });
+                foreach (var item in pedido.ListaCodigoProduto)
+                    lstProdutos.Add(new Produto { IdProduto = item });
+                var obj = new Pedido
+                {
+                    IdPedido = pedido.IdPedido,
+                    StatusPedido = new StatusPedido { IdStatusPedido = pedido.IdStatusPedido },
+                    StatusPagamento = new StatusPagamento { IdStatusPagamento = pedido.IdStatusPagamento },
+                    Produtos = lstProdutos
+                };
 
-            return BadRequest(new { Mensagem = "Erro ao alterar pedido!" });
+                _logger.Information($"Atualizando pedido id: {pedido.IdPedido}.");
+
+                if (await _pedidoApplication.Atualizar(obj))
+                    return Ok(new { Mensagem = "Pedido alterado com sucesso!" });
+
+                return BadRequest(new { Mensagem = "Erro ao alterar pedido!" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao alterar pedido id {pedido.IdPedido}. Erro: {ex.Message}");
+                throw;
+            }
         }
     }
 }

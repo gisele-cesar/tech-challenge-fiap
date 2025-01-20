@@ -7,17 +7,19 @@ namespace fiap.API.Webhooks
     [ApiController]
     public class PagamentoExternoController : ControllerBase
     {
+        private readonly Serilog.ILogger _logger;
         private readonly IPagamentoApplication _pagamentoApplication;
         private readonly IPedidoApplication _pedidoApplication;
 
-        public PagamentoExternoController(IPagamentoApplication pagamentoApplication, IPedidoApplication pedidoApplication)
+        public PagamentoExternoController(Serilog.ILogger logger, IPagamentoApplication pagamentoApplication, IPedidoApplication pedidoApplication)
         {
+            _logger = logger;
             _pagamentoApplication = pagamentoApplication;
             _pedidoApplication = pedidoApplication;
         }
 
         /// <summary>
-        /// Receber evento de ordem de pagamento criada no meio de pagamento externo
+        /// Receber evento de ordem de pagamento criada
         /// </summary>
         /// <param name="id"></param>
         /// <param name="topic"></param>
@@ -29,11 +31,12 @@ namespace fiap.API.Webhooks
         [HttpPost("ReceberEventoOrdemCriada")]
         public async Task<IActionResult> ReceberEventoOrdemCriada([FromQuery] string id, [FromQuery] string topic, [FromBody] dynamic content)
         {
+            _logger.Information($"Recebendo evento de ordem de pagamento criado no MP. IdOrdemComercial: {id}");
             return Ok(await _pagamentoApplication.ConsultarOrdemPagamento(id));
         }
 
         /// <summary>
-        /// Receber evento de pagamento processado no meio de pagamento externo
+        /// Receber evento de pagamento processado
         /// </summary>
         /// <param name="data_id"></param>
         /// <param name="topic"></param>
@@ -45,12 +48,15 @@ namespace fiap.API.Webhooks
         [HttpPost("ReceberEventoPagamentoProcessado")]
         public async Task<IActionResult> ReceberEventoPagamentoProcessado([FromQuery] int data_id, [FromQuery] string topic, [FromBody] dynamic content)
         {
+            _logger.Information($"Buscando pedido id: {data_id} para confirmar pagamento processado.");
             var pedido = await _pedidoApplication.ObterPedido(data_id);
 
             pedido.StatusPagamento.IdStatusPagamento = 2; //Aprovado
             pedido.StatusPedido.IdStatusPedido = 2; // Recebido
 
+            _logger.Information($"Atualizando status pagamento pedido id: {data_id}.");
             await _pedidoApplication.Atualizar(pedido);
+            _logger.Information($"Status pagamento pedido id: {data_id} atualizado com sucesso!");
 
             return Ok();
         }
