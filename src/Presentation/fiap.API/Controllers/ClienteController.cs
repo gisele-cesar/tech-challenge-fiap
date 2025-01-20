@@ -27,8 +27,15 @@ namespace fiap.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            _logger.Information("Buscando lista de clientes");
-            return Ok(await _clienteApplication.Obter());
+            try
+            {
+                _logger.Information("Buscando lista de clientes");
+                return Ok(await _clienteApplication.Obter());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao obter clientes. Erro: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -43,7 +50,16 @@ namespace fiap.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            return Ok(await _clienteApplication.Obter(id));
+            try
+            {
+                _logger.Information($"Buscando cliente por id: {id}");
+                return Ok(await _clienteApplication.Obter(id));
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao obter cliente id: {id}. Erro: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -57,7 +73,15 @@ namespace fiap.API.Controllers
         [HttpGet("ObterPorCpf/{cpf}")]
         public async Task<IActionResult> ObterPorCpf(string cpf)
         {
-            return Ok(await _clienteApplication.ObterPorCpf(cpf));
+            try
+            {
+                _logger.Information($"Buscando cadastro cliente por cpf: {cpf}.");
+                return Ok(await _clienteApplication.ObterPorCpf(cpf));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao obter cliente por cpf: {cpf}. Erro: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -83,10 +107,18 @@ namespace fiap.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Cliente cliente)
         {
-            if (await _clienteApplication.Inserir(cliente))
-                return Ok(new { Mensagem = "Cliente incluido com sucesso!" });
+            try
+            {
+                _logger.Information("Inserindo novo cliente.");
+                if (await _clienteApplication.Inserir(cliente))
+                    return Ok(new { Mensagem = "Cliente incluido com sucesso!" });
 
-            return BadRequest(new { Mensagem = "Erro ao incluir cliente!" });
+                return BadRequest(new { Mensagem = "Erro ao incluir cliente!" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao incluir cliente. Erro: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -113,10 +145,18 @@ namespace fiap.API.Controllers
         [HttpPut()]
         public async Task<IActionResult> Put([FromBody] Cliente cliente)
         {
-            if (await _clienteApplication.Atualizar(cliente))
-                return Ok(new { Mensagem = "Cliente alterado com sucesso!" });
+            try
+            {
+                _logger.Information($"Atualizando cadastro cliente id: {cliente.Id}.");
+                if (await _clienteApplication.Atualizar(cliente))
+                    return Ok(new { Mensagem = "Cliente alterado com sucesso!" });
 
-            return BadRequest(new { Mensagem = "Erro ao alterar cliente!" });
+                return BadRequest(new { Mensagem = "Erro ao alterar cliente!" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao alterar cliente. Erro: {ex.Message}");
+            }
         }
     }
 }

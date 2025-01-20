@@ -19,7 +19,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{2336E2F1-353B-44A2-847A-3480A13EC6BB}"
 	ProjectSection(SolutionItems) = preProject
 		k8s\app-deployment.yaml = k8s\app-deployment.yaml
-		k8s\app-hpa.yaml = k8s\app-hpa.yaml
 		k8s\app-service-account.yaml = k8s\app-service-account.yaml
 		k8s\app-service.yaml = k8s\app-service.yaml
 	EndProjectSection
@@ -39,6 +38,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fiap.Repositories", "src\Infrastructure\Data\fiap.Repositories\fiap.Repositories.csproj", "{E440EC9A-D0BF-4BE2-869F-1596435B1E59}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fiap.Services", "src\Infrastructure\Services\fiap.Services\fiap.Services.csproj", "{A91A6039-9FB0-4812-B776-6F4DFE4058C1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{4C714684-4735-4FFF-98FA-06224912FC98}"
+	ProjectSection(SolutionItems) = preProject
+		9SOAT -  Tech Challenge - Fase 2.postman_collection.json = 9SOAT -  Tech Challenge - Fase 2.postman_collection.json
+		Desenho Arquitetura.jpg = Desenho Arquitetura.jpg
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,6 +84,7 @@ Global
 		{E785BC85-CF30-4C13-824E-42AE32114EEC} = {EEC85BE4-9F84-4419-896A-D81B4B21B946}
 		{E440EC9A-D0BF-4BE2-869F-1596435B1E59} = {5219F5D3-4D32-4519-8818-F75B038F3A4A}
 		{A91A6039-9FB0-4812-B776-6F4DFE4058C1} = {26AB4B06-4481-43A9-8A3A-6A74FF2E9DDE}
+		{4C714684-4735-4FFF-98FA-06224912FC98} = {D57CF421-1469-413C-AC01-DA26687B7318}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EBEFF8AC-01F5-409B-B24E-BD23A8CC26E6}

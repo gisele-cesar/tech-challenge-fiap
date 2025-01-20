@@ -1,6 +1,5 @@
 ﻿using Amazon.SecretsManager;
 using Amazon.SecretsManager.Model;
-using fiap.Domain.Entities;
 using fiap.Domain.Interfaces;
 using Serilog;
 using System.Text.Json;
@@ -16,7 +15,7 @@ namespace fiap.Services
             _secret = secret;
             _logger = logger;
         }
-        public async Task<SecretDbConnect> ObterSecret(string segredo)
+        public async Task<T> ObterSecret<T>(string segredo)
         {
             GetSecretValueRequest request = new GetSecretValueRequest
             {
@@ -37,7 +36,7 @@ namespace fiap.Services
                 throw;
             }
 
-            return JsonSerializer.Deserialize<SecretDbConnect>(response.SecretString);
+            return JsonSerializer.Deserialize<T>(response.SecretString);
         }
     }
 }

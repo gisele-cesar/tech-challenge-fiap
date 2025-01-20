@@ -22,8 +22,8 @@ namespace fiap.Domain.Entities
         public string category { get; set; }
         public string title { get; set; }
         public string description { get; set; }
-        public int quantity { get; set; }
-        public string unit_measure { get; set; }
+        public int quantity { get { return 1; } }
+        public string unit_measure { get { return "unit"; } }
         public decimal unit_price { get; set; }
         public decimal total_amount { get; set; }
     }

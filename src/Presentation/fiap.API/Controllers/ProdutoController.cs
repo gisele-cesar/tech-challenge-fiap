@@ -8,9 +8,11 @@ namespace fiap.API.Controllers
     [ApiController]
     public class ProdutoController : ControllerBase
     {
+        private readonly Serilog.ILogger _logger;
         private readonly IProdutoApplication _produtoApplication;
-        public ProdutoController(IProdutoApplication produtoApplication)
+        public ProdutoController(Serilog.ILogger logger, IProdutoApplication produtoApplication)
         {
+            _logger = logger;
             _produtoApplication = produtoApplication;
         }
 
@@ -25,7 +27,15 @@ namespace fiap.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _produtoApplication.Obter());
+            try
+            {
+                _logger.Information("Buscando lista de produtos.");
+                return Ok(await _produtoApplication.Obter());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao obter produtos. Erro: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -40,7 +50,16 @@ namespace fiap.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            return Ok(await _produtoApplication.Obter(id));
+            try
+            {
+                _logger.Information($"Buscando produto por id: {id}.");
+                return Ok(await _produtoApplication.Obter(id));
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao obter produto por id: {id}. Erro: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -76,10 +95,18 @@ namespace fiap.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Produto obj)
         {
-            if (await _produtoApplication.Inserir(obj))
-                return Ok(new { Mensagem = "Produto incluido com sucesso!" });
+            try
+            {
+                _logger.Information("Inserindo novo produto.");
+                if (await _produtoApplication.Inserir(obj))
+                    return Ok(new { Mensagem = "Produto incluido com sucesso!" });
 
-            return BadRequest(new { Mensagem = "Erro ao incluir produto!" });
+                return BadRequest(new { Mensagem = "Erro ao incluir produto!" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao incluir produto. Erro: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -116,10 +143,19 @@ namespace fiap.API.Controllers
         [HttpPut()]
         public async Task<IActionResult> Put([FromBody] Produto obj)
         {
-            if (await _produtoApplication.Atualizar(obj))
-                return Ok(new { Mensagem = "Produto alterado com sucesso!" });
+            try
+            {
+                _logger.Information($"Alterando produto id: {obj.IdProduto}.");
+                if (await _produtoApplication.Atualizar(obj))
+                    return Ok(new { Mensagem = "Produto alterado com sucesso!" });
 
-            return BadRequest(new { Mensagem = "Erro ao alterar produto!" });
+                return BadRequest(new { Mensagem = "Erro ao alterar produto!" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao alterar produto. Erro: {ex.Message}");
+                throw;
+            }
         }
 
         /// <summary>
@@ -145,7 +181,17 @@ namespace fiap.API.Controllers
         [HttpGet("ObterProdutoPorCategoria/{idCategoriaProduto}")]
         public async Task<IActionResult> GetProdutosPorCategoria(int idCategoriaProduto)
         {
-            return Ok(await _produtoApplication.ObterProdutosPorCategoria(idCategoriaProduto));
+            try
+            {
+                _logger.Information($"Buscando produtos por categoria idCategoriaProduto: {idCategoriaProduto}.");
+                return Ok(await _produtoApplication.ObterProdutosPorCategoria(idCategoriaProduto));
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao obter produto por categoria id {idCategoriaProduto}. Erro: {ex.Message}");
+                throw;
+            }
         }
     }
 }
