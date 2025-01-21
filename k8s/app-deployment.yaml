@@ -39,7 +39,7 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: fiap-fase-2-pod
+  name: fiap-fase-2
 spec:
   containers:
   - name: fiap-fase-2
