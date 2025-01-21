@@ -283,6 +283,43 @@ namespace fiap.Repositories
             }
         }
 
+        public Task<bool> AtualizarStatusPedido(Pedido pedido)
+        {
+            using var connection = _connectionFactory();
+            connection.Open();
+            _logger.Information("Conexão com o banco de dados realizada com sucesso!");
+            using (var transaction = connection.BeginTransaction())
+            {
+                using var command = connection.CreateCommand();
+                try
+                {
+                    StringBuilder sb = new StringBuilder();
+                    command.Transaction = transaction;
+                    sb.Append("update Pedido set IdStatusPedido = @idStatusPedido, ");
+                    sb.Append("ValorTotalPedido = @valorTotalPedido, DataAlteracao = getdate(), ");
+                    sb.Append("IdStatusPagamento = @idStatusPagamento ");
+                    sb.Append("where IdPedido = @idPedido");
+                    command.CommandText = sb.ToString();
+
+                    command.Parameters.Add(new SqlParameter { ParameterName = "@idPedido", Value = pedido.IdPedido, SqlDbType = SqlDbType.Int });
+                    command.Parameters.Add(new SqlParameter { ParameterName = "@idStatusPedido", Value = pedido.StatusPedido.IdStatusPedido, SqlDbType = SqlDbType.Int });
+                    command.Parameters.Add(new SqlParameter { ParameterName = "@idStatusPagamento", Value = pedido.StatusPagamento.IdStatusPagamento, SqlDbType = SqlDbType.Int });
+                    command.Parameters.Add(new SqlParameter { ParameterName = "@valorTotalPedido", Value = pedido.ValorTotal, SqlDbType = SqlDbType.Decimal });
+
+                    command.ExecuteNonQuery();
+
+                    transaction.Commit();
+                    _logger.Information($"Status pedido id: {pedido.IdPedido} atualizado com sucesso!");
+                    return Task.FromResult(command.ExecuteNonQuery() >= 1);
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error($"Erro ao atualizar pedido id: {pedido.IdPedido}. Erro: {ex.Message}");
+                    transaction.Rollback();
+                    throw;
+                }
+            }
+        }
         public Task<bool> Atualizar(Pedido pedido)
         {
             using var connection = _connectionFactory();
