@@ -64,6 +64,12 @@ CREATE TABLE Produto (
         CONSTRAINT FK_CategoriaProduto FOREIGN KEY (IdCategoriaProduto) REFERENCES CategoriaProduto(IdCategoriaProduto)
     );
 
+    CREATE TABLE StatusPagamento (
+        IdStatusPagamento INT IDENTITY PRIMARY KEY,
+        Descricao VARCHAR(50) NOT NULL
+    )
+
+
     CREATE TABLE StatusPedido (
         IdStatusPedido INT IDENTITY PRIMARY KEY,
         Descricao VARCHAR(50) NOT NULL
@@ -78,8 +84,10 @@ CREATE TABLE Produto (
         ValorTotalPedido DECIMAL(18,2) NOT NULL,
         DataCriacao DATETIME NOT NULL,
         DataAlteracao DATETIME NULL,
+        IdStatusPagamento INT NOT NULL,
         CONSTRAINT FK_Cliente FOREIGN KEY (IdCliente) REFERENCES Cliente(IdCliente),
-        CONSTRAINT FK_StatusPedido FOREIGN KEY (IdStatusPedido) REFERENCES StatusPedido(IdStatusPedido)
+        CONSTRAINT FK_StatusPedido FOREIGN KEY (IdStatusPedido) REFERENCES StatusPedido(IdStatusPedido),
+        CONSTRAINT FK_StatusPagamento FOREIGN KEY (IdStatusPagamento) REFERENCES StatusPagamento(IdStatusPagamento)
     );
 
 
@@ -98,8 +106,14 @@ VALUES ('Lanche', getdate()),
 	   ('Bebida', getdate()), 
 	   ('Sobremesa', getdate());
 
+INSERT INTO StatusPagamento(Descricao)
+VALUES ('Pendente'), 
+	   ('Aprovado'), 
+	   ('Recusado');
+
 INSERT INTO StatusPedido(Descricao)
-VALUES ('Recebido'), 
+VALUES ('Solicitado'), 
+	   ('Recebido'), 
 	   ('Em preparação'), 
 	   ('Pronto'), 
 	   ('Finalizado');
