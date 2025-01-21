@@ -27,7 +27,7 @@ namespace fiap.Services
             var pagamentoExterno = new OrdemPagamentoExterno
             {
                 external_reference = pedido.IdPedido.ToString(),
-                notification_url = "https://webhook.site/e5b44c33-f659-4d35-bfe6-4bcaa7d6d7b1",
+                notification_url = "http://abf8a0373974c477c988a709a3916975-1818303021.us-east-1.elb.amazonaws.com/api/PagamentoExterno/ReceberEventoOrdemCriada",
                 expiration_date = DateTime.Now.AddMinutes(5).ToString("yyyy-MM-ddTHH:mm:ss.fffzzz"),
                 total_amount = pedido.ValorTotal,
                 items = pedido.Produtos.Select(produto => new Item
