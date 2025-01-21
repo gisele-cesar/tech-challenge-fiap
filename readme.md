@@ -38,7 +38,8 @@ A lanchonete enfrenta dificuldades no atendimento devido à falta de um sistema 
  - Serviços AWS: Utilização de RDS para gerenciamento de banco de dados e CloudWatch para monitoramento e logging.
  - Utilização de arquivos de configuração para "Service", "Service Account" e "Deployment" (arquivos manifestos do tipo yaml).
  - Utilização de deployment service através do Github actions para expor a aplicação.
- - Utilização do AWS Secrets para armazenamento seguro de valores sensíveis para acesso ao banco de dados e ao serviço externo de meio de pagamentos (MercadoPado). 
+ - Utilização do AWS Secrets para armazenamento seguro de valores sensíveis para acesso ao banco de dados e ao serviço externo de meio de pagamentos (MercadoPado).
+ - Integração com os serviços do MercadoPago para criação de Ordem de Pagamento e confirmação de processamento de Pagamentos.
 
  ### Desenho de arquitetura da solução proposta
 
@@ -104,29 +105,7 @@ A lanchonete enfrenta dificuldades no atendimento devido à falta de um sistema 
  - Para obter o link de acesso, acesse a conta AWS, consulte o "Load Balancers" no caminho EC2 -> Load Balancers
  - Clique para acessar e visualizar o nome e seus detalhes
  - Copie o nome do DNS gerado e cole no browser adicionando no final 'api/health'
-
-<!-- 
-2. Deploy da aplicação
-
- - Construir imagem Docker da aplicação:
-```bash
-   eksctl create cluster --name eks-fiap --region us-east-1 --node-type t3.micro
-```
-
- - Enviar Imagem Docker:
-```bash
-
-```
-
- - Aplicar Manifests Kubernets:
-```bash
-   kubectl apply -f k8s/
-```
-
- - Configurar HPA:
-```bash
-   kubectl apply -f k8s/app-hpa.yaml
-``` -->
+ - Copie o nome do DNS gerado e cole no browser adicionando no final a api a ser consultada ou substitua o parâmetro {{baseUrl}} da collection do Postman
 
 4. Acessar a API: Use o IP externo do serviço LoadBalancer para acessar a API.
 
@@ -137,7 +116,7 @@ A lanchonete enfrenta dificuldades no atendimento devido à falta de um sistema 
 
 - Instância banco de dados AWS RDS 'db-rds-fiap' disponível
 - Acessar o swagger em https://localhost:44322/swagger/index.html (para rodar localmente)
-- Acessar o swagger em --- (para rodar na AWS)
+- Utilizar a colletion do Postman substituindo o parâmetro {{baseUrl}} pelo DNS gerado na instância do LoadBalancer  (para rodar na AWS)
 
 ### Ordem de execução das APIs
 
@@ -165,5 +144,3 @@ Acesse clicando: [collection](docs/9SOAT%20-%20Tech%20Challenge%20-%20Fase%202.p
  - Dockerfile: Configuração do Docker para a publicação da imagem da aplicação na AWS
 
  - deploy.yml: Arquivo de configuração para o deploy via Github actions
- - 
-
