@@ -218,16 +218,8 @@ namespace fiap.Repositories
                         Preco = (decimal)reader["Preco"]
                     });
                 }
-
-                if (lst.Count > 0)
-                {
                     _logger.Information($"Lista de itens do pedido id: {idPedido} obtida com sucesso!");
                     return Task.FromResult(lst);
-                }
-                else
-                {
-                    throw new Exception($"Itens do pedido id: {idPedido} não encontrados.");
-                }
             }
             catch (Exception ex)
             {
@@ -362,7 +354,7 @@ namespace fiap.Repositories
                         command2.Parameters.Add(new SqlParameter { ParameterName = "@idPedido", Value = pedido.IdPedido, SqlDbType = SqlDbType.Int });
                         command2.Parameters.Add(new SqlParameter { ParameterName = "@idProduto", Value = item.IdProduto, SqlDbType = SqlDbType.Int });
 
-                        command.ExecuteNonQuery();
+                        command2.ExecuteNonQuery();
                     }
                     transaction.Commit();
                     _logger.Information($"Pedido id: {pedido.IdPedido} atualizado com sucesso!");
