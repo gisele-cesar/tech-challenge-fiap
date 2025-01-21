@@ -55,7 +55,7 @@ namespace fiap.API.Webhooks
             pedido.StatusPedido.IdStatusPedido = 2; // Recebido
 
             _logger.Information($"Atualizando status pagamento pedido id: {data_id}.");
-            await _pedidoApplication.Atualizar(pedido);
+            await _pedidoApplication.AtualizarStatusPedido(pedido);
             _logger.Information($"Status pagamento pedido id: {data_id} atualizado com sucesso!");
 
             return Ok();
