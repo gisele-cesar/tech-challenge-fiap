@@ -4,7 +4,6 @@ using Serilog;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using static System.Net.WebRequestMethods;
 
 namespace fiap.Services
 {
