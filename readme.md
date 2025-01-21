@@ -98,6 +98,12 @@ A lanchonete enfrenta dificuldades no atendimento devido à falta de um sistema 
 2. Deploy da aplicação
 
  - Acessar o Github e realizar o Pull Request para a branch [develop] para criação da action e deploy da aplicação na AWS
+ - Na aba "Pull Requests" do Github, confirme o merge pull request
+ - Em seguida, vá até a aba "Actions do Gihub e acompanhe o pipeline gerado
+ - Se executar com sucesso (sem erros), o deploy para o ECR foi realizado com sucesso.
+ - Para obter o link de acesso, acesse a conta AWS, consulte o "Load Balancers" no caminho EC2 -> Load Balancers
+ - Clique para acessar e visualizar o nome e seus detalhes
+ - Copie o nome do DNS gerado e cole no browser adicionando no final 'api/health'
 
 <!-- 
 2. Deploy da aplicação
