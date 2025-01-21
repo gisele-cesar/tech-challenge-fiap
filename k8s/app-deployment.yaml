@@ -8,12 +8,12 @@ spec:
   selector:
     matchLabels:
       app: fiap-fase-2
-      version: v01
+      # version: v01
   template:
     metadata:
       labels:
         app: fiap-fase-2
-        version: v01
+        # version: v01
     spec:
       serviceAccountName: fiap-fase-2-account
       imagePullSecrets: 
@@ -35,22 +35,22 @@ spec:
         env: 
         - name: "ASPNETCORE_ENVIROMENT"
           value: "Development"
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: fiap-fase-2
-spec:
-  containers:
-  - name: fiap-fase-2
-    image: DOCKER_IMAGE
-    resources:
-      requests:
-        memory: "50Mi"
-      limits:
-        memory: "100Mi"
-    ports:
-    - containerPort: 80
-    env: 
-    - name: "ASPNETCORE_ENVIROMENT"
-      value: "Development"
+# ---
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: fiap-fase-2
+# spec:
+#   containers:
+#   - name: fiap-fase-2
+#     image: DOCKER_IMAGE
+#     resources:
+#       requests:
+#         memory: "50Mi"
+#       limits:
+#         memory: "100Mi"
+#     ports:
+#     - containerPort: 80
+#     env: 
+#     - name: "ASPNETCORE_ENVIROMENT"
+#       value: "Development"
