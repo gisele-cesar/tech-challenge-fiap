@@ -165,4 +165,5 @@ Acesse clicando: [collection](docs/9SOAT%20-%20Tech%20Challenge%20-%20Fase%202.p
  - Dockerfile: Configuração do Docker para a publicação da imagem da aplicação na AWS
 
  - deploy.yml: Arquivo de configuração para o deploy via Github actions
+ - 
 
