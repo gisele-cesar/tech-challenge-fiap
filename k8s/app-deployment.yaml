@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fiap-fase-2
-  namespace: fiap-fase-2
   labels: 
      app: fiap-fase-2
 spec:
@@ -26,27 +25,27 @@ spec:
         imagePullPolicy: Always
         resources:
           requests:
-            memory: "50Mi"
-            cpu: "1m"
-          limits:
             memory: "100Mi"
             cpu: "100m"
+          limits:
+            memory: "200Mi"
+            cpu: "200m"
         ports:
         - containerPort: 80
         env: 
         - name: "ASPNETCORE_ENVIROMENT"
           value: "Development"
-# ---
-# apiVersion: v1
-# kind: Pod
-# metadata:
-#   name: fiap-fase-2-pod
-# spec:
-#   containers:
-#   - name: fiap-fase-2
-#     image: DOCKER_IMAGE
-#     resources:
-#       requests:
-#         memory: "50Mi"
-#       limits:
-#         memory: "100Mi"
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fiap-fase-2-pod
+spec:
+  containers:
+  - name: fiap-fase-2
+    image: DOCKER_IMAGE
+    resources:
+      requests:
+        memory: "50Mi"
+      limits:
+        memory: "100Mi"
