@@ -1,4 +1,4 @@
-# 9SOAT - Tech Challenge FIAP - Fase 2
+# 9SOAT - Tech Challenge FIAP - Fase 3
 
 ## Visão Geral do Projeto
 
@@ -85,16 +85,8 @@ A lanchonete enfrenta dificuldades no atendimento devido à falta de um sistema 
 
 1. Criação e configuração do EKS Cluster: 
 
- - Crie um cluster EKS utilizando o console AWS ou AWS CLI.
- - Configure o kubectl para se conectar ao cluster EKS.
+ Nesta fase de entrega do Tech Challenge, estamos implementando as melhores práticas de CI/CD para as aplicações, segregando os códigos em repositórios, portanto a criação de infra para o EKS está sendo realizada por meio de Infra como código utilizando Terraform no repo [tech-challenge-fiap-infra-kubectl](https://github.com/gisele-cesar/tech-challenge-fiap-infra-kubectl).
 
- ***Obs.: Siga a documentação da AWS para criar um cluster EKS: [Documentação AWS EKS](https://docs.aws.amazon.com/pt_br/eks/latest/userguide/getting-started.html)
-
- - Após realizar a configuração, rodar o comando abaixo para criação do EKS:
- ```bash
-   eksctl create cluster --name eks-fiap --region us-east-1 --node-type t3.micro
-```
- - Aguarde a finalização da criação da stack "eksctl-eks-fiap-cluster"
 
 2. Deploy da aplicação
 
