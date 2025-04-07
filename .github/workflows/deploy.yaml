@@ -45,7 +45,7 @@ jobs:
       if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
       run: dotnet tool update dotnet-sonarscanner --tool-path ./.sonar/scanner
     
-    - name: Test and analyze
+    - name: Test and analyze.....
       env:
        # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
