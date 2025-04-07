@@ -53,7 +53,7 @@ jobs:
         dotnet tool install --global dotnet-sonarscanner
         dotnet sonarscanner begin /k:"gisele-cesar_tech-challenge-fiap" /o:"projetos-fiap" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.scanner.scanAll=false
         dotnet build tech-challenge-fiap.sln --no-incremental
-        dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover -l trx
+        dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
         dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
       # run: |
