@@ -50,9 +50,15 @@ jobs:
        # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
-        ./.sonar/scanner/dotnet-sonarscanner begin /k:"gisele-cesar_tech-challenge-fiap" /o:"projetos-fiap" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-        dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover -l trx
-        ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+        dotnet tool install --global dotnet-sonarscanner
+        dotnet sonarscanner begin /k:"gisele-cesar_tech-challenge-fiap" /o:"projetos-fiap" /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+        dotnet build tech-challenge-fiap.sln --no-incremental
+        dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+
+      # run: |
+      #   ./.sonar/scanner/dotnet-sonarscanner begin /k:"gisele-cesar_tech-challenge-fiap" /o:"projetos-fiap" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+      #   dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover -l trx
+      #   ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
     # - name: Configure AWS credentials
     #   uses: aws-actions/configure-aws-credentials@v1
