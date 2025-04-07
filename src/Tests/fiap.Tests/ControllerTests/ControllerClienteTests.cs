@@ -21,7 +21,6 @@ namespace fiap.Tests.ControllerTests
             _clienteApplication.Setup(x => x.Obter(It.IsAny<int>())).ReturnsAsync(new Domain.Entities.Cliente { Cpf = "12345678910" , Email = "teste@teste.com", Id = 1, Nome = "Joao da Silva" });
 
             ClienteController clienteController = new(_logger.Object , _clienteApplication.Object);
-
             var result = await clienteController.Get();
 
             Assert.NotNull(result);
