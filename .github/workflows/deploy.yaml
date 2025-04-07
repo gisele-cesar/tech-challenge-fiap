@@ -54,7 +54,7 @@ jobs:
         dotnet sonarscanner begin /k:"gisele-cesar_tech-challenge-fiap" /o:"projetos-fiap" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.cs.dotcover.reportsPaths=coverage.html 
         dotnet build tech-challenge-fiap.sln --no-incremental
         dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover -l trx
-        dotnet dotcover cover-dotnet --output=coverage.html --reporttype=HTML -- test ./Tests/fiap.Tests.csproj
+        dotnet dotcover cover-dotnet --output=coverage.html --reporttype=HTML -- test src/Tests/fiap.Tests/fiap.Tests.csproj
         dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
       # run: |
