@@ -4,30 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>98561d0c-8f32-435b-9373-36a6eea67078</UserSecretsId>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <DockerfileContext>..\..\..</DockerfileContext>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DebugType>none</DebugType>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DebugType>none</DebugType>
-  </PropertyGroup>
-  <PropertyGroup>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <NoWarn>$(NoWarn);1591</NoWarn>
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="Mappers\**" />
-    <Content Remove="Mappers\**" />
-    <EmbeddedResource Remove="Mappers\**" />
-    <None Remove="Mappers\**" />
-  </ItemGroup>
-
-
   <ItemGroup>
     <PackageReference Include="AWSSDK.Core" Version="3.7.400.79" />
     <PackageReference Include="AWSSDK.SecurityToken" Version="3.7.401.28" />
