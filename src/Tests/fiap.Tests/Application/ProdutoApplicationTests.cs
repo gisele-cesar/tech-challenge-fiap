@@ -1,14 +1,8 @@
-﻿using fiap.API.Controllers;
-using fiap.Application.Interfaces;
-using fiap.Application.UseCases;
+﻿using fiap.Application.UseCases;
 using fiap.Domain.Entities;
 using fiap.Domain.Interfaces;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Xunit;
 
 namespace fiap.Tests.Application
 {
@@ -107,5 +101,9 @@ namespace fiap.Tests.Application
 
             Assert.True(result);
         }
+    }
+
+    internal class FactAttribute : Attribute
+    {
     }
 }

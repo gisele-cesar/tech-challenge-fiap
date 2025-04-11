@@ -2,11 +2,7 @@
 using fiap.Application.Interfaces;
 using fiap.Domain.Entities;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Xunit;
 
 namespace fiap.Tests.ControllerTests
 {

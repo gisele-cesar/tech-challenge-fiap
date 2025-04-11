@@ -2,6 +2,7 @@
 using fiap.Domain.Entities;
 using fiap.Domain.Interfaces;
 using Moq;
+using Xunit;
 
 namespace fiap.Tests.Application
 {

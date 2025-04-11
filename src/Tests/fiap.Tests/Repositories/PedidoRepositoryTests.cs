@@ -1,18 +1,11 @@
-﻿using Xunit;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using fiap.Domain.Entities;
+﻿using fiap.Domain.Entities;
 using fiap.Domain.Interfaces;
+using fiap.Repositories;
 using Moq;
 using System.Data;
-using fiap.Application.UseCases;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using fiap.Repositories;
-using System.Data.SqlClient;
 using System.Data.Common;
+using System.Data.SqlClient;
+using Xunit;
 
 namespace fiap.Tests.Repositories
 {

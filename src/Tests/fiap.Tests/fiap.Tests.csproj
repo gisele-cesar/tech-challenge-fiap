@@ -35,9 +35,6 @@
     <ProjectReference Include="..\..\Presentation\fiap.API\fiap.API.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Using Include="Xunit" />
-  </ItemGroup>
   <Target Name="SetCoverletOutputProperty" BeforeTargets="GenerateCoverletResult">
     <PropertyGroup>
       <CoverletOutput>coverage.xml</CoverletOutput>
