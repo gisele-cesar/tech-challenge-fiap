@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 using System.Reflection;
 using fiap.Domain.Interfaces;
 using fiap.Domain.Entities;
-
+using System.Diagnostics.CodeAnalysis;
 
 var builder = WebApplication.CreateBuilder(args);
 
