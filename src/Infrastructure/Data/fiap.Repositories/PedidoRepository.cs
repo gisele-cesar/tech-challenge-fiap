@@ -14,12 +14,14 @@ namespace fiap.Repositories
         private readonly ILogger _logger;
         private readonly Func<IDbConnection> _connectionFactory;
         private readonly IClienteRepository _clienteRepository;
+        private readonly IItemPedidoRepository _itemPedidoRepository;
 
-        public PedidoRepository(ILogger logger, Func<IDbConnection> connectionFactory, IClienteRepository clienteRepository)
+        public PedidoRepository(ILogger logger, Func<IDbConnection> connectionFactory, IClienteRepository clienteRepository , IItemPedidoRepository itemPedidoRepository)
         {
             _logger = logger;
             _connectionFactory = connectionFactory;
             _clienteRepository = clienteRepository;
+            _itemPedidoRepository = itemPedidoRepository;
         }
 
         public async Task<List<Pedido>> ObterPedidos()
@@ -55,7 +57,7 @@ namespace fiap.Repositories
                             IdStatusPagamento = (int)reader["IdStatusPagamento"],
                             Descricao = reader["DescricaoStatusPagamento"].ToString()
                         },
-                        Produtos = await ObterItemPedido((int)reader["IdPedido"])
+                        Produtos = await _itemPedidoRepository.ObterItemPedido((int)reader["IdPedido"])
                     });
                 }
 
@@ -98,9 +100,10 @@ namespace fiap.Repositories
                 using var reader = command.ExecuteReader();
                 while (reader.Read())
                 {
+                    var idPedido = (int)reader["IdPedido"];
                     lst.Add(new Pedido
                     {
-                        IdPedido = (int)reader["IdPedido"],
+                        IdPedido = idPedido,
                         Cliente = await _clienteRepository.Obter((int)reader["IdCliente"]),
                         Numero = reader["NumeroPedido"].ToString(),
                         StatusPedido = new StatusPedido
@@ -113,7 +116,7 @@ namespace fiap.Repositories
                             IdStatusPagamento = (int)reader["IdStatusPagamento"],
                             Descricao = reader["DescricaoStatusPagamento"].ToString()
                         },
-                        Produtos = await ObterItemPedido((int)reader["IdPedido"])
+                        Produtos = await _itemPedidoRepository.ObterItemPedido(idPedido)
                     });
                 }
 
@@ -153,7 +156,7 @@ namespace fiap.Repositories
                 {
                     pedido = new Pedido
                     {
-                        IdPedido = (int)reader["IdPedido"],
+                        IdPedido = idPedido,
                         Cliente = await _clienteRepository.Obter((int)reader["IdCliente"]),
                         Numero = reader["NumeroPedido"].ToString(),
                         StatusPedido = new StatusPedido
@@ -167,7 +170,7 @@ namespace fiap.Repositories
                             Descricao = reader["DescricaoStatusPagamento"].ToString()
                         },
 
-                        Produtos = await ObterItemPedido(idPedido)
+                        Produtos = await _itemPedidoRepository.ObterItemPedido(idPedido)
                     };
                     _logger.Information($"Pedido id: {idPedido} obtido com sucesso!");
                     return pedido;
@@ -180,50 +183,6 @@ namespace fiap.Repositories
             catch (Exception ex)
             {
                 _logger.Error($"Erro ao obter pedido id {idPedido}. Erro: {ex.Message}.");
-                throw;
-            }
-        }
-
-        private Task<List<Produto>> ObterItemPedido(int idPedido)
-        {
-            try
-            {
-                using var connection = _connectionFactory();
-                connection.Open();
-                _logger.Information("Conexão com o banco de dados realizada com sucesso!");
-
-                var lst = new List<Produto>();
-                using var command = connection.CreateCommand();
-
-                StringBuilder sb = new StringBuilder();
-                sb.Append("select * from ItemPedido item ");
-                sb.Append("join Produto p on p.IdProduto = item.IdProduto ");
-                sb.Append("where IdPedido = @idPedido ");
-                var param = command.CreateParameter();
-                param.ParameterName = "@idPedido";
-                param.Value = idPedido;
-                command.Parameters.Add(param);
-
-                command.CommandText = sb.ToString();
-
-                using var reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    lst.Add(new Produto
-                    {
-                        IdProduto = (int)reader["IdProduto"],
-                        IdCategoriaProduto = (int)reader["IdCategoriaProduto"],
-                        Nome = reader["Nome"].ToString(),
-                        Descricao = reader["Descricao"].ToString(),
-                        Preco = (decimal)reader["Preco"]
-                    });
-                }
-                    _logger.Information($"Lista de itens do pedido id: {idPedido} obtida com sucesso!");
-                    return Task.FromResult(lst);
-            }
-            catch (Exception ex)
-            {
-                _logger.Error($"Erro ao obter itens do pedido {idPedido} . Erro: {ex.Message}.");
                 throw;
             }
         }
@@ -253,14 +212,14 @@ namespace fiap.Repositories
 
                     foreach (var item in pedido.Produtos)
                     {
-                        using var command2 = connection.CreateCommand();
-                        command2.Transaction = transaction;
-                        command2.CommandText = "insert into ItemPedido values(@idPedido, @idProduto)";
+                        /// using var command2 = connection.CreateCommand();
+                        command.Transaction = transaction;
+                        command.CommandText = "insert into ItemPedido values(@idPedido, @idProduto)";
 
-                        command2.Parameters.Add(new SqlParameter { ParameterName = "@idPedido", Value = idPedido, SqlDbType = SqlDbType.Int });
-                        command2.Parameters.Add(new SqlParameter { ParameterName = "@idProduto", Value = item.IdProduto, SqlDbType = SqlDbType.Int });
+                        command.Parameters.Add(new SqlParameter { ParameterName = "@idPedido", Value = idPedido, SqlDbType = SqlDbType.Int });
+                        command.Parameters.Add(new SqlParameter { ParameterName = "@idProduto", Value = item.IdProduto, SqlDbType = SqlDbType.Int });
 
-                        command2.ExecuteNonQuery();
+                        command.ExecuteNonQuery();
                     }
                     transaction.Commit();
                     _logger.Information($"Pedido numero {pedido.Numero} inserido com sucesso!. Pedido id: {pedido.IdPedido}.");
