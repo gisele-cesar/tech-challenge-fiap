@@ -22,11 +22,11 @@ namespace fiap.Repositories
         {
             try
             {
-            using var connection = _connectionFactory();
-            connection.Open();
-            _logger.Information("Conexão com o banco de dados realizada com sucesso!");
+                using var connection = _connectionFactory();
+                connection.Open();
+                _logger.Information("Conexão com o banco de dados realizada com sucesso!");
 
-            using var command = connection.CreateCommand();
+                using var command = connection.CreateCommand();
                 command.CommandText = "SELECT * FROM Produto WHERE IdProduto = @id";
                 var param = command.CreateParameter();
                 param.ParameterName = "@id";
@@ -37,7 +37,7 @@ namespace fiap.Repositories
                 if (reader.Read())
                 {
                     _logger.Information($"Produto id: {id} obtido com sucesso!");
-                    return Task.FromResult(new Produto
+                    var produto = new Produto
                     {
                         IdProduto = (int)reader["IdProduto"],
                         IdCategoriaProduto = (int)reader["IdCategoriaProduto"],
@@ -46,7 +46,9 @@ namespace fiap.Repositories
                         Preco = (decimal)reader["Preco"],
                         DataCriacao = (DateTime)reader["DataCriacao"],
                         DataAlteracao = reader["DataAlteracao"] == DBNull.Value ? (DateTime?)null : (DateTime)reader["DataAlteracao"]
-                    });
+                    };
+
+                    return Task.FromResult(produto);
                 }
                 else
                 {

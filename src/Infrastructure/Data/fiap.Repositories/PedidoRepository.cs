@@ -279,6 +279,8 @@ namespace fiap.Repositories
             using (var transaction = connection.BeginTransaction())
             {
                 using var command = connection.CreateCommand();
+                using var commandDeletar = command;
+                using var command2 = command;
                 try
                 {
                     StringBuilder sb = new StringBuilder();
@@ -296,7 +298,7 @@ namespace fiap.Repositories
 
                     command.ExecuteNonQuery();
 
-                    using var commandDeletar = connection.CreateCommand();
+                    
                     commandDeletar.Transaction = transaction;
                     commandDeletar.CommandText = "delete ItemPedido where idPedido = @idPedido";
 
@@ -306,7 +308,7 @@ namespace fiap.Repositories
 
                     foreach (var item in pedido.Produtos)
                     {
-                        using var command2 = connection.CreateCommand();
+                        
                         command2.Transaction = transaction;
                         command2.CommandText = "insert ItemPedido values(@idPedido, @idProduto)";
 

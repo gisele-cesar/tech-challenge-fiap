@@ -23,7 +23,7 @@ namespace fiap.Tests.Service
 
             var secretValueResponse = new GetSecretValueResponse
             {
-                SecretString = "{\"userName\":\"teste\",\"password\":\"teste\",\"engine\":\"teste\",\"host\":\"teste\",\"port\":\"teste\",\"dbInstanceIdentifier\":\"teste\"}"
+                SecretString = "{\"username\":\"teste\",\"password\":\"teste\",\"engine\":\"teste\",\"host\":\"teste\",\"port\":\"teste\",\"dbInstanceIdentifier\":\"teste\"}"
             };
 
             mockSecretsManager
