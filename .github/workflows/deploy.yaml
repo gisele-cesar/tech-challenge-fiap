@@ -55,10 +55,10 @@ jobs:
       #   #coverlet .\fiap.Tests\bin\Debug\net6.0\fiap.Tests.dll --target "dotnet" --targetargs "test --no-build"  -f=opencover -o="coverage.xml"
       #   dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover -l trx
       #   dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
-      run: |
-        ./.sonar/scanner/dotnet-sonarscanner begin /k:"gisele-cesar_tech-challenge-fiap" /o:"projetos-fiap" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-        dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover -l trx
-        ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+       run: |
+         ./.sonar/scanner/dotnet-sonarscanner begin /k:"gisele-cesar_tech-challenge-fiap" /o:"projetos-fiap" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+         dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover -l trx
+         ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
     # - name: Configure AWS credentials
     #   uses: aws-actions/configure-aws-credentials@v1
