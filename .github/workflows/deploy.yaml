@@ -3,6 +3,8 @@ name: Deploy to ECR
 on:
    push:
      branches: [ feature/testes-unitarios ]
+   pull_request:
+     types: [opened, synchronize, reopened]
 
 env:
   ECR_REPOSITORY: fiap-aluno
