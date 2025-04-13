@@ -2,7 +2,7 @@ name: Deploy to ECR
 
 on:
    push:
-    branches: [ feature/testes-unitarios ]
+     branches: [ feature/testes-unitarios ]
 
 env:
   ECR_REPOSITORY: fiap-aluno
