@@ -102,8 +102,4 @@ namespace fiap.Tests.Application
             Assert.True(result);
         }
     }
-
-    internal class FactAttribute : Attribute
-    {
-    }
 }

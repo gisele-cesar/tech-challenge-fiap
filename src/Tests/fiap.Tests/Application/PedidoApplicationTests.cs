@@ -108,5 +108,19 @@ namespace fiap.Tests.Application
 
             Assert.True(result);
         }
+        [Fact]
+        public async Task AtualizarStatusPedido_OkAsync()
+        {
+            var _repo = new Mock<IPedidoRepository>();
+            var _logger = new Mock<Serilog.ILogger>();
+
+            _repo.SetupSequence(x => x.AtualizarStatusPedido(pedido))
+                .ReturnsAsync(true);
+
+            PedidoApplication app = new(_logger.Object, _repo.Object);
+            var result = await app.AtualizarStatusPedido(pedido);
+
+            Assert.True(result);
+        }
     }
 }

@@ -9,6 +9,8 @@ using fiap.Domain.Interfaces;
 using fiap.Domain.Entities;
 using System.Diagnostics.CodeAnalysis;
 
+[assembly: ExcludeFromCodeCoverage]
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
