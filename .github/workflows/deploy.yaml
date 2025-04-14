@@ -50,9 +50,9 @@ jobs:
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
-        ./.sonar/scanner/dotnet-sonarscanner begin /k:"gisele-cesar_tech-challenge-fiap" /o:"projetos-fiap" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+        ./.sonar/scanner/dotnet-sonarscanner begin /k:"gisele-cesar_tech-challenge-fiap" /o:"projetos-fiap" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
         dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover -l trx
-        ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+        ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
                 # run: |
       #   dotnet tool install --global dotnet-sonarscanner
