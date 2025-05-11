@@ -37,7 +37,7 @@
 
   <Target Name="SetCoverletOutputProperty" BeforeTargets="GenerateCoverletResult">
     <PropertyGroup>
-      <CoverletOutput>coverage.xml</CoverletOutput>
+      <CoverletOutput>coverage.opencover.xml</CoverletOutput>
     </PropertyGroup>
   </Target>
 </Project>
