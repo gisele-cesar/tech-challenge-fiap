@@ -36,7 +36,7 @@ jobs:
       with:
         token: ${{ secrets.SONAR_TOKEN }}
         fail_ci_if_error: true
-        files: ./coverage.opencover.xml
+        files: /home/runner/work/tech-challenge-fiap/tech-challenge-fiap/src/Tests/fiap.Tests/coverage.opencover.xml
 
     # - name: Set short git commit SHA
     #   id: commit
