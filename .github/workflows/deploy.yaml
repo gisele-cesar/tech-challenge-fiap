@@ -19,14 +19,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
     - name: Set short git commit SHA
       id: commit
       uses: prompt/actions-commit-hash@v2
 
-    - name: Check out code
-      uses: actions/checkout@v2
-
+    # - name: Check out code
+    #   uses: actions/checkout@v2
+    - uses: actions/checkout@v3
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'
+        
+    - name: Restore dependencies
+      run: dotnet restore
     - name: Cache SonarCloud packages
       uses: actions/cache@v4
       with:
@@ -52,14 +58,19 @@ jobs:
       run: |
         dotnet tool install --global dotnet-sonarscanner
         dotnet sonarscanner begin /k:"gisele-cesar_tech-challenge-fiap" /o:"projetos-fiap" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.cs.dotcover.reportsPaths=coverage.html 
-        #dotnet build tech-challenge-fiap.sln --no-incremental
-        dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover -l trx
+        dotnet build tech-challenge-fiap.sln --no-incremental
+        dotnet test src/Tests/fiap.Tests/fiap.Tests.csproj --collect "Code Coverage" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:ExcludeByFile=\"**/Microsoft.NET.Test.Sdk.Program.cs\"
         dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
-        #       run: |
-        # ./.sonar/scanner/dotnet-sonarscanner begin /k:"gisele-cesar_tech-challenge-fiap" /o:"projetos-fiap" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-        # dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover -l trx
-        # ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+    - name: Rodando testes unitários e criando relatório
+      run: dotnet test src/Tests/fiap.Tests/fiap.Tests.csproj /p:CollectCoverage=true /p:IncludeTestAssembly=true /p:CoverletOutputFormat=opencover /p:ExcludeByFile=\"**/Microsoft.NET.Test.Sdk.Program.cs\"
+        
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        fail_ci_if_error: true
+        files: /home/runner/work/tech-challenge-fiap/tech-challenge-fiap/src/Tests/fiap.Tests/coverage.opencover.xml
 
     # - name: Configure AWS credentials
     #   uses: aws-actions/configure-aws-credentials@v1
